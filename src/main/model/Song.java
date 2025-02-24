@@ -1,4 +1,4 @@
-//package model;
+package main.model;
 
 public class Song extends Album {
     private String title;
