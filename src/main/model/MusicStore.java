@@ -22,14 +22,14 @@ public class MusicStore {
      * is very invase of MusicStores actual purpose.
      */
     private void generateDataset() throws FileNotFoundException{
-        File albumFile = new File("albums.txt");
+        File albumFile = new File("albums/albums.txt");
         Scanner fileScanner = new Scanner(albumFile);
         
         ArrayList<String> albumFileNames = new ArrayList<>();
         while (fileScanner.hasNextLine()) {
             String currLine = fileScanner.nextLine();
             String[] albumName = currLine.split(",");
-            String nameString = albumName[0] + "_" + albumName[1];
+            String nameString = "albums/" + albumName[0] + "_" + albumName[1] + ".txt";
             albumFileNames.add(nameString);
         }
         fileScanner.close();
@@ -74,6 +74,15 @@ public class MusicStore {
 
     public HashMap<String, Song> getSongMap() {
         return songMap;
+    }
+
+    public Song getSongByName(String name) {
+        if (songMap.containsKey(name)) {
+            return songMap.get(name);
+        }
+        else {
+            return null;
+        }
     }
 }
 
