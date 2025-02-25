@@ -18,9 +18,9 @@ public class MusicStore {
     }
 
     /*
-     * Generate both hashmaps of album and song objects for reference in code. Might make a controller class and move this as it
-     * is very invase of MusicStores actual purpose.
+     * Generate both hashmaps of album and song objects for reference in code. 
      */
+    //TODO: Might make a seperate class and move this as it is very invase of MusicStores actual purpose.
     private void generateDataset() throws FileNotFoundException{
         File albumFile = new File("albums/albums.txt");
         Scanner fileScanner = new Scanner(albumFile);
@@ -76,6 +76,7 @@ public class MusicStore {
         return songMap;
     }
 
+    //TODO: impliment rest of search features (made this one to test)
     public Song getSongByName(String name) {
         if (songMap.containsKey(name)) {
             return songMap.get(name);

@@ -14,7 +14,7 @@ public class Song extends Album {
     public String getTitle() {
         return title;
     }
-
+    
     @Override
     public String toString() {
         String mm = "Song: " + this.title;

@@ -1,5 +1,6 @@
 package main.model;
 
-public class PlayList {
+//TODO
+public class Playlist {
     
 }
