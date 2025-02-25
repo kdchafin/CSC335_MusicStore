@@ -1,6 +1,7 @@
 package main.model;
 
 import java.util.ArrayList;
+import java.lang.StringBuilder;
 
 public class Album {
     
@@ -39,12 +40,19 @@ public class Album {
 
     @Override
     public String toString() {
-        String tString = "";
-        tString = "Album: " + this.getAlbumTitle() +
-                  ", Artist: " + this.getArtist() +
-                  ", Genre: " + this.getGenre() +
-                  ", Year: " + this.getYear();
+        StringBuilder sb = new StringBuilder();
+        int index = 1;
+        sb.append(this.getAlbumTitle() + " by " + this.getArtist());
+        for(Song song : this.getSongsOnAlbum()) {
+            sb.append("\n" + index + ". " + song.getTitle());
+            index++;
+        }
 
-        return tString;
+        return sb.toString();
+    }
+
+    public ArrayList<Song> getSongsOnAlbum() {
+        return songsOnAlbum;
     }
 }
+
