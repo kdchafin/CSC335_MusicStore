@@ -1,5 +1,5 @@
 package main.model;
 
-public class PlayList {
+public class Playlist {
     
 }

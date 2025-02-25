@@ -3,27 +3,48 @@ package main.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Scanner;
+import java.util.Set;
 
 public class MusicStore {
 
-    private HashMap<String, Album> albumMap;
-    private HashMap<String, Song> songMap;
+    private static MusicStore instance;
+    private HashMap<String, Album> titleToAlbumMap;
+    private HashMap<String, Album> artistToAlbumMap;
+    private HashMap<String, Song> titleToSongMap;
+    private HashMap<String, Song> artistToSongMap;
 
-    public MusicStore() throws FileNotFoundException{
-        this.albumMap = new HashMap<>();
-        this.songMap = new HashMap<>();
+    private MusicStore() {
+        this.titleToAlbumMap = new HashMap<>();
+        this.artistToAlbumMap = new HashMap<>();
+        this.titleToSongMap = new HashMap<>();
+        this.artistToSongMap = new HashMap<>();
         generateDataset();
+    }
+
+    public static MusicStore getInstance() {
+        if(instance == null) {
+            instance = new MusicStore();
+        }
+        return instance;
     }
 
     /*
      * Generate both hashmaps of album and song objects for reference in code. Might make a controller class and move this as it
      * is very invase of MusicStores actual purpose.
      */
-    private void generateDataset() throws FileNotFoundException{
+    private void generateDataset() {
+        Scanner fileScanner = null;
         File albumFile = new File("albums/albums.txt");
-        Scanner fileScanner = new Scanner(albumFile);
+        try {
+            fileScanner = new Scanner(albumFile);
+        } catch (FileNotFoundException e) {
+            System.out.println("File not found: albums/albums.txt");
+            System.exit(0);
+        }
         
         ArrayList<String> albumFileNames = new ArrayList<>();
         while (fileScanner.hasNextLine()) {
@@ -36,7 +57,13 @@ public class MusicStore {
 
         for (String s : albumFileNames) {
             File nameFile = new File(s);
-            Scanner albumScanner  = new Scanner(nameFile);
+            Scanner albumScanner = null;
+            try {
+                albumScanner = new Scanner(nameFile);
+            } catch (FileNotFoundException e) {
+                System.out.println("File not found: " + s);
+                System.exit(0);
+            }
             String currLine = albumScanner.nextLine();
 
             String[] albumInfo = currLine.split(",");
@@ -47,42 +74,104 @@ public class MusicStore {
             int year = Integer.parseInt(albumInfo[3]);
 
             Album album = new Album(albumName, artistName, genre, year);
-            albumMap.put(albumName, album);
+            addAlbumTitle(albumName, album);
 
             while (albumScanner.hasNextLine()) {
                 currLine = albumScanner.nextLine();
-
                 Song song = new Song(currLine, album);
-                songMap.put(currLine, song);
+                album.addSong(song);
+                titleToSongMap.put(currLine, song);
             }
             albumScanner.close();
         }
     }
 
-    public void addAlbum(String key, Album value) {
-        this.albumMap.put(key, value);
+    public void addAlbumTitle(String title, Album album) {
+        this.titleToAlbumMap.put(title, album);
+        this.artistToAlbumMap.put(album.getArtist(), album);
     }
 
-    // Getters for albumMap and songMap
-    public HashMap<String, Album> getAlbumMap() {
-        return albumMap;
+    public void addAlbumArtist(String artist, Album album) {
+        this.artistToAlbumMap.put(artist, album);
+        this.titleToAlbumMap.put(album.getAlbumTitle(), album);
     }
 
-    public void addSong(String key, Song value) {
-        this.songMap.put(key, value);
+    // getters for all 4 HashMaps
+    public HashMap<String, Album> getTitleToAlbumMap() {
+        return titleToAlbumMap;
+    }
+    
+    public HashMap<String, Song> getTitleToSongMap() {
+        return titleToSongMap;
     }
 
-    public HashMap<String, Song> getSongMap() {
-        return songMap;
+    public HashMap<String, Album> getArtistToAlbumMap() {
+        return artistToAlbumMap;
     }
 
-    public Song getSongByName(String name) {
-        if (songMap.containsKey(name)) {
-            return songMap.get(name);
+    public HashMap<String, Song> getArtistToSongMap() {
+        return artistToSongMap;
+    }
+
+    public void addSong(String title, Song song) {
+        this.titleToSongMap.put(title, song);
+        this.artistToSongMap.put(song.getArtist(), song);
+    }
+
+    public Song getSongByTitle(String title) {
+        if (titleToSongMap.containsKey(title)) {
+            return titleToSongMap.get(title);
         }
         else {
             return null;
         }
+    }
+
+    public Album getAlbumByTitle(String title) {
+        if (titleToAlbumMap.containsKey(title)) {
+            return titleToAlbumMap.get(title);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public Song getSongByArtist(String artist) {
+        if(artistToSongMap.containsKey(artist)) {
+            return artistToSongMap.get(artist);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public Album getAlbumByArtist(String artist) {
+        if(artistToAlbumMap.containsKey(artist)) {
+            return artistToAlbumMap.get(artist);
+        }
+        else {
+            return null;
+        }
+    }
+
+    public List<String> getAllSongs() {
+        List<String> sortedKeys = new ArrayList<>();
+        titleToSongMap.values().forEach(song -> sortedKeys.add(song.getTitle() + " by " + song.getArtist() + " on the album \"" + song.getAlbumTitle() + "\""));
+        Collections.sort(sortedKeys);
+        return sortedKeys;
+    }
+
+    public List<String> getAllAlbums() {
+        List<String> sortedKeys = new ArrayList<>();
+        titleToAlbumMap.values().forEach(album -> sortedKeys.add(album.getAlbumTitle() + " : " + album.getArtist()));
+        Collections.sort(sortedKeys);
+        return sortedKeys;
+    }
+
+    public List<String> getAllArtists() {
+        List<String> sortedKeys = new ArrayList<>(artistToAlbumMap.keySet());
+        Collections.sort(sortedKeys);
+        return sortedKeys;
     }
 }
 
