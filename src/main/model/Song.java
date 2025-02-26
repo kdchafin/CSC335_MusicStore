@@ -6,7 +6,7 @@ public class Song extends Album {
     private boolean isFavorite = false;
 
     public Song(String title, Album album) {
-        super(album.getAlbumTitle(),
+        super(album.getTitle(),
               album.getArtist(),
               album.getGenre(), 
               album.getYear());
@@ -19,7 +19,7 @@ public class Song extends Album {
     
     @Override
     public String toString() {
-        return this.title + " by " + this.getArtist() + " on the album \"" + this.getAlbumTitle() + "\"";
+        return this.title + " by " + this.getArtist() + " on the album \"" + this.getTitle() + "\"";
     }
 
     public int getRating() {
@@ -54,7 +54,7 @@ public class Song extends Album {
         Song other = (Song) obj;
         return this.getTitle().equals(other.getTitle()) 
             && this.getArtist().equals(other.getArtist()) 
-            && this.getAlbumTitle().equals(other.getAlbumTitle())
-            && this.getGenre().equals(other.getAlbumTitle());
+            && this.getTitle().equals(other.getTitle())
+            && this.getGenre().equals(other.getTitle());
     }
 }

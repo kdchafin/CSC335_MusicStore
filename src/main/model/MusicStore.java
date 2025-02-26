@@ -3,10 +3,9 @@ package main.model;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 
 public class MusicStore {
 
@@ -15,8 +14,7 @@ public class MusicStore {
     private ArrayList<Album> albumList;
     private ArrayList<Song> songList;
 
-    private MusicStore() {
-
+    public MusicStore() {
         this.albumList = new ArrayList<>();
         this.songList = new ArrayList<>();
         generateDataset();
@@ -71,17 +69,25 @@ public class MusicStore {
 
             // create the album object
             Album album = new Album(albumName, artistName, genre, year);
-            albumList.add(album);
+            addAlbumToList(album);
 
             //
             while (albumScanner.hasNextLine()) {
                 currLine = albumScanner.nextLine();
                 Song song = new Song(currLine, album);
                 album.addSong(song);
-                songList.add(song);
+                addSongToList(song);
             }
             albumScanner.close();
         }
+    }
+
+    public void addAlbumToList(Album album) {
+        albumList.add(album);
+    }
+
+    public void addSongToList(Song song) {
+        songList.add(song);
     }
 
     // getters for all 4 HashMaps
@@ -144,7 +150,9 @@ public class MusicStore {
         return temp;
     }
 
-    public ArrayList getAllSongs() {
+    //TODO: remove references for the 3 functions below
+    
+    public ArrayList<Song> getAllSongs() {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
@@ -164,7 +172,19 @@ public class MusicStore {
         return temp;
     }
 
-    public ArrayList<String> getAllArtists
+    public ArrayList<String> getAllArtists() {
+        ArrayList<String> temp = new ArrayList<>();
+
+        for (Album a : albumList) {
+            temp.add(a.getArtist());
+        }
+
+        //remove duplicated using a set
+        Set<String> temp2 = new HashSet<>(temp); 
+        temp = new ArrayList<>(temp2); 
+
+        return temp;
+    }
 
     /*
     public List<String> getAllSongs() {
@@ -188,6 +208,6 @@ public class MusicStore {
     }
     */
 }
-
-
-// >.< bruh!
+//   "bruh!"
+//     /
+// (^.^) 
