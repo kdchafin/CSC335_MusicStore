@@ -1,10 +1,8 @@
 package main.view;
 
-import java.io.FileNotFoundException;
-
 import main.model.*;
 import java.util.Scanner;
-import java.util.List;
+import java.util.ArrayList;
 
 public class MusicStoreMenu extends Menu {
     public MusicStoreMenu(Menu previousMenu) {
@@ -18,7 +16,7 @@ public class MusicStoreMenu extends Menu {
         [7] List All Artists
         """.trim());
         defaultOption = () -> { previousMenu.executeMenu(); };
-        addOption(1, "search for songs by title", () -> { searchForSongsByTitle(); });
+        addOption(1, "search for songs by title", () -> { searchForSongsByTitle(); executeMenu();});
         addOption(2, "search for albums by title", () -> { searchForAlbumsByTitle(); executeMenu();});
         addOption(3, "search for songs by artist", () -> { System.out.println("Search for Songs by Artist"); executeMenu();});
         addOption(4, "search for albums by artist", () -> { System.out.println("Search for Albums by Artist"); executeMenu();});
@@ -47,34 +45,39 @@ public class MusicStoreMenu extends Menu {
         System.out.println("Enter an album title: ");
         String title = in.nextLine();
         MusicStore musicStore = MusicStore.getInstance();
-        Album album = musicStore.getAlbumByTitle(title);
-        if(album != null) {
-            System.out.println(album);
-        } else {
-            System.out.println("Album not found");
+
+        ArrayList<Album> album = musicStore.getAlbumByTitle(title);
+        if(album.size() == 0) {
+            //TODO: print song not found
+        }
+        else if (album.size() == 1) {
+            //TODO: print the song
+        }
+        else {
+            //TODO: prompt the user which song they are refering to
         }
     }
 
     private void listAllSongs() {
-        List<String> songs = MusicStore.getInstance().getAllSongs();
+        ArrayList<Song> songs = MusicStore.getInstance().getAllSongs();
         System.out.println(songs.size() + " Songs Found:");
         printEachElement(songs);
     }
 
     private void listAllAlbums() {
-        List<String> albums = MusicStore.getInstance().getAllAlbums();
+        ArrayList<Album> albums = MusicStore.getInstance().getAllAlbums();
         System.out.println(albums.size() + " Albums Found:");
         printEachElement(albums);
     }
 
     private void listAllArtists() {
-        List<String> artists = MusicStore.getInstance().getAllArtists();
+        ArrayList<String> artists = MusicStore.getInstance().getAllArtists();
         System.out.println(artists.size() + " Artists Found:");
         printEachElement(artists);
     }
 
-    private void printEachElement(List<String> elements) {
-        for(String element : elements) {
+    private <T> void printEachElement(ArrayList<T> elements) {
+        for(T element : elements) {
             System.out.println("- " + element);
         }
     }

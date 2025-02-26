@@ -30,7 +30,7 @@ public class Album {
         return this.genre;
     }
 
-    public String getAlbumTitle() {
+    public String getTitle() {
         return this.albumTitle;
     }
 
@@ -42,7 +42,7 @@ public class Album {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         int index = 1;
-        sb.append(this.getAlbumTitle() + " by " + this.getArtist());
+        sb.append(this.getTitle() + " by " + this.getArtist());
         for(Song song : this.getSongsOnAlbum()) {
             sb.append("\n" + index + ". " + song.getTitle());
             index++;
