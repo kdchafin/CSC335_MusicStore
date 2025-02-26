@@ -37,5 +37,4 @@ public class SelectedSongMenu extends Menu {
         RateSongMenu rateSongMenu = new RateSongMenu(this, this.song);
         rateSongMenu.executeMenu();
     }
-    
 }
