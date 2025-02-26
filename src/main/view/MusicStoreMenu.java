@@ -1,7 +1,5 @@
 package main.view;
 
-import java.io.FileNotFoundException;
-
 import main.model.*;
 import java.util.Scanner;
 import java.util.List;
@@ -18,7 +16,7 @@ public class MusicStoreMenu extends Menu {
         [7] List All Artists
         """.trim());
         defaultOption = () -> { previousMenu.executeMenu(); };
-        addOption(1, "search for songs by title", () -> { searchForSongsByTitle(); });
+        addOption(1, "search for songs by title", () -> { searchForSongsByTitle(); executeMenu();});
         addOption(2, "search for albums by title", () -> { searchForAlbumsByTitle(); executeMenu();});
         addOption(3, "search for songs by artist", () -> { System.out.println("Search for Songs by Artist"); executeMenu();});
         addOption(4, "search for albums by artist", () -> { System.out.println("Search for Albums by Artist"); executeMenu();});

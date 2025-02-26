@@ -3,7 +3,7 @@ package main.model;
 public class Song extends Album {
     private String title;
     private int rating;
-    private boolean isFavorite;
+    private boolean isFavorite = false;
 
     public Song(String title, Album album) {
         super(album.getAlbumTitle(),

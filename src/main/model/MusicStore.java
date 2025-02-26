@@ -7,21 +7,18 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
-import java.util.Set;
 
 public class MusicStore {
 
     private static MusicStore instance;
-    private HashMap<String, Album> titleToAlbumMap;
-    private HashMap<String, Album> artistToAlbumMap;
-    private HashMap<String, Song> titleToSongMap;
-    private HashMap<String, Song> artistToSongMap;
+
+    private ArrayList<Album> albumList;
+    private ArrayList<Song> songList;
 
     private MusicStore() {
-        this.titleToAlbumMap = new HashMap<>();
-        this.artistToAlbumMap = new HashMap<>();
-        this.titleToSongMap = new HashMap<>();
-        this.artistToSongMap = new HashMap<>();
+
+        this.albumList = new ArrayList<>();
+        this.songList = new ArrayList<>();
         generateDataset();
     }
 
@@ -35,13 +32,8 @@ public class MusicStore {
     /*
      * Generate both hashmaps of album and song objects for reference in code. 
      */
-<<<<<<< HEAD
-    //TODO: Might make a seperate class and move this as it is very invase of MusicStores actual purpose.
-    private void generateDataset() throws FileNotFoundException{
-=======
     private void generateDataset() {
         Scanner fileScanner = null;
->>>>>>> 87fcd23bedf42239a2755054b414a0a88b552fac
         File albumFile = new File("albums/albums.txt");
         try {
             fileScanner = new Scanner(albumFile);
@@ -77,94 +69,104 @@ public class MusicStore {
             String genre = albumInfo[2];
             int year = Integer.parseInt(albumInfo[3]);
 
+            // create the album object
             Album album = new Album(albumName, artistName, genre, year);
-            addAlbumTitle(albumName, album);
+            albumList.add(album);
 
+            //
             while (albumScanner.hasNextLine()) {
                 currLine = albumScanner.nextLine();
                 Song song = new Song(currLine, album);
                 album.addSong(song);
-                titleToSongMap.put(currLine, song);
+                songList.add(song);
             }
             albumScanner.close();
         }
     }
 
-    public void addAlbumTitle(String title, Album album) {
-        this.titleToAlbumMap.put(title, album);
-        this.artistToAlbumMap.put(album.getArtist(), album);
-    }
-
-    public void addAlbumArtist(String artist, Album album) {
-        this.artistToAlbumMap.put(artist, album);
-        this.titleToAlbumMap.put(album.getAlbumTitle(), album);
-    }
-
     // getters for all 4 HashMaps
-    public HashMap<String, Album> getTitleToAlbumMap() {
-        return titleToAlbumMap;
+    public ArrayList<Album> getAlbumList() {
+        return albumList;
     }
     
-    public HashMap<String, Song> getTitleToSongMap() {
-        return titleToSongMap;
+    public ArrayList<Song> getSongList() {
+        return songList;
     }
 
-    public HashMap<String, Album> getArtistToAlbumMap() {
-        return artistToAlbumMap;
+    //TODO: the next 4 functions have escaping references. please fix
+    /* getSongByTitle: returns all songs of a given title
+     * returns all songs in a ArrayList<Song> 
+     * 
+     * *PLEASE READ: if multiple songs are found, please prompt the user in the view!!!
+     */
+    public ArrayList<Song> getSongByTitle(String title) {
+        ArrayList<Song> temp = new ArrayList<>();
+
+        for (Song s : songList) {
+            if (s.getTitle() == title) temp.add(s);
+        }
+        return temp;
     }
 
-<<<<<<< HEAD
-    //TODO: impliment rest of search features (made this one to test)
-    public Song getSongByName(String name) {
-        if (songMap.containsKey(name)) {
-            return songMap.get(name);
-=======
-    public HashMap<String, Song> getArtistToSongMap() {
-        return artistToSongMap;
+    /* getSongByArtist: returns all songs of a given artist
+     * returns all songs in a ArrayList<Song> 
+     */
+    public ArrayList<Song> getSongByArtist(String artist) {
+        ArrayList<Song> temp = new ArrayList<>();
+
+        for (Song s : songList) {
+            if (s.getArtist() == artist) temp.add(s);
+        }
+        return temp;
     }
 
-    public void addSong(String title, Song song) {
-        this.titleToSongMap.put(title, song);
-        this.artistToSongMap.put(song.getArtist(), song);
+    /* getAlbumByTitle: returns all albums of a given title
+     * returns albums in a ArrayList<Album>
+     */
+    public ArrayList<Album> getAlbumByTitle(String title) {
+        ArrayList<Album> temp = new ArrayList<>();
+
+        for (Album a : albumList) {
+            if (a.getTitle() == title) temp.add(a);
+        }
+        return temp;
     }
 
-    public Song getSongByTitle(String title) {
-        if (titleToSongMap.containsKey(title)) {
-            return titleToSongMap.get(title);
->>>>>>> 87fcd23bedf42239a2755054b414a0a88b552fac
+    /* getAlbumByArtist: returns all albums by a given artist
+     * returns albums in a ArrayList<Album>
+     */
+    public ArrayList<Album> getAlbumByArtist(String artist) {
+        ArrayList<Album> temp = new ArrayList<>();
+
+        for (Album a : albumList) {
+            if (a.getArtist() == artist) temp.add(a);
         }
-        else {
-            return null;
-        }
+        return temp;
     }
 
-    public Album getAlbumByTitle(String title) {
-        if (titleToAlbumMap.containsKey(title)) {
-            return titleToAlbumMap.get(title);
+    public ArrayList getAllSongs() {
+        ArrayList<Song> temp = new ArrayList<>();
+
+        for (Song s : songList) {
+            temp.add(s);
         }
-        else {
-            return null;
-        }
+
+        return temp;
     }
 
-    public Song getSongByArtist(String artist) {
-        if(artistToSongMap.containsKey(artist)) {
-            return artistToSongMap.get(artist);
+    public ArrayList<Album> getAllAlbums() {
+        ArrayList<Album> temp = new ArrayList<>();
+
+        for (Album a : albumList) {
+            temp.add(a);
         }
-        else {
-            return null;
-        }
+
+        return temp;
     }
 
-    public Album getAlbumByArtist(String artist) {
-        if(artistToAlbumMap.containsKey(artist)) {
-            return artistToAlbumMap.get(artist);
-        }
-        else {
-            return null;
-        }
-    }
+    public ArrayList<String> getAllArtists
 
+    /*
     public List<String> getAllSongs() {
         List<String> sortedKeys = new ArrayList<>();
         titleToSongMap.values().forEach(song -> sortedKeys.add(song.getTitle() + " by " + song.getArtist() + " on the album \"" + song.getAlbumTitle() + "\""));
@@ -184,6 +186,7 @@ public class MusicStore {
         Collections.sort(sortedKeys);
         return sortedKeys;
     }
+    */
 }
 
 
