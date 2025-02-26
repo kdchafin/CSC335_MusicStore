@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.lang.StringBuilder;
 
 public class Playlist {
-<<<<<<< HEAD
     private final String plName;
     private ArrayList<Song> plSonglist;
 
@@ -34,10 +33,8 @@ public class Playlist {
         return sb.toString();
     }
 }
-=======
     private String playlistName;
     private ArrayList<Song> songs;
 
     
 }
->>>>>>> cb1a5368381efda3243c51a08c4176fc71ab1ac7
