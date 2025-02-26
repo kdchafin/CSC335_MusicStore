@@ -17,7 +17,6 @@ public class MusicStore {
     public MusicStore() {
         this.albumList = new ArrayList<>();
         this.songList = new ArrayList<>();
-        generateDataset();
     }
 
     public static MusicStore getInstance() {
@@ -30,7 +29,7 @@ public class MusicStore {
     /*
      * Generate both hashmaps of album and song objects for reference in code. 
      */
-    private void generateDataset() {
+    public void generateDataset() {
         Scanner fileScanner = null;
         File albumFile = new File("albums/albums.txt");
         try {

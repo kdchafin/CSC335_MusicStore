@@ -30,9 +30,9 @@ public class MusicStoreMenu extends Menu {
         System.out.println("Enter a song title: ");
         String title = in.nextLine();
         MusicStore musicStore = MusicStore.getInstance();
-        Song song = musicStore.getSongByTitle(title);
+        ArrayList<Song> song = musicStore.getSongByTitle(title);
         if(song != null) {
-            System.out.println(song);
+            System.out.println(song.get(0));
             SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, song); 
             selectedSongMenu.executeMenu();
         } else {
