@@ -33,8 +33,3 @@ public class Playlist {
         return sb.toString();
     }
 }
-    private String playlistName;
-    private ArrayList<Song> songs;
-
-    
-}
