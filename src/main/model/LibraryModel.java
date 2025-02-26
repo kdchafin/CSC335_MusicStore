@@ -32,11 +32,19 @@ public class LibraryModel {
     }
 
     public ArrayList<Album> getAlbums() {
-        return albums;
+        ArrayList<Album> temp = new ArrayList<>();
+        for(Album album : albums) {
+            temp.add(new Album(album));
+        }
+        return temp;
     }
 
     public ArrayList<Playlist> getPlaylists() {
-        return playlists;
+        ArrayList<Playlist> temp = new ArrayList<>();
+        for(Playlist playlist : playlists) {
+            temp.add(new Playlist(playlist));
+        }
+        return temp;
     }
 
     public String createPlaylist(String name) {
@@ -76,7 +84,7 @@ public class LibraryModel {
                 return "Song removed from " + pl.getName() + " successfully!";
             }
         }
-        return "No Playlist With That Name Found.";
+        return "There is no playlist named \"" + name + "\".";
     }
 
     public ArrayList<Song> getFavoriteSongs() {
@@ -96,5 +104,14 @@ public class LibraryModel {
             }
         }
         songs.add(song);
+    }
+
+    public void addAlbum(Album album) {
+        for (Album a : albums) {
+            if (a.equals(album)) {
+                return; // do not add duplicate albums
+            }
+        }
+        albums.add(album);
     }
 }
