@@ -5,12 +5,8 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
-<<<<<<< HEAD
-import java.util.Set;
-=======
+import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
->>>>>>> 5a677756ac0b0132d171f5468390a71f7bbea14b
 
 public class MusicStore {
 
@@ -94,26 +90,11 @@ public class MusicStore {
         songList.add(song);
     }
 
-    // getters for all 4 HashMaps
-    public ArrayList<Album> getAlbumList() {
-        return albumList;
-    }
-    
-    public ArrayList<Song> getSongList() {
-        return songList;
-    }
-
-    //TODO: the next 4 functions have escaping references. please fix
-    /* getSongByTitle: returns all songs of a given title
-     * returns all songs in a ArrayList<Song> 
-     * 
-     * *PLEASE READ: if multiple songs are found, please prompt the user in the view!!!
-     */
     public ArrayList<Song> getSongByTitle(String title) {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
-            if (s.getTitle().equalsIgnoreCase(title)) temp.add(s);
+            if (s.getTitle().equalsIgnoreCase(title)) temp.add(new Song(s));
         }
         return temp;
     }
@@ -125,7 +106,7 @@ public class MusicStore {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
-            if (s.getArtist().equalsIgnoreCase(artist)) temp.add(s);
+            if (s.getArtist().equalsIgnoreCase(artist)) temp.add(new Song(s));
         }
         return temp;
     }
@@ -137,7 +118,7 @@ public class MusicStore {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {
-            if (a.getTitle().equalsIgnoreCase(title)) temp.add(a);
+            if (a.getTitle().equalsIgnoreCase(title)) temp.add(new Album(a));
         }
         return temp;
     }
@@ -149,21 +130,16 @@ public class MusicStore {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {
-            if (a.getArtist().equalsIgnoreCase(artist)) temp.add(a);
+            if (a.getArtist().equalsIgnoreCase(artist)) temp.add(new Album(a));
         }
         return temp;
     }
-
-<<<<<<< HEAD
-    //TODO: remove references for the 3 functions below
     
-=======
->>>>>>> 5a677756ac0b0132d171f5468390a71f7bbea14b
     public ArrayList<Song> getAllSongs() {
         ArrayList<Song> temp = new ArrayList<>();
         // duplicate = "lullaby"
         for (Song s : songList) {
-            temp.add(s);
+            temp.add(new Song(s));
         }
         // System.out.println(titles.size());
         Collections.sort(temp, Comparator.comparing(Song::getTitle));
@@ -174,14 +150,14 @@ public class MusicStore {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {
-            temp.add(a);
+            temp.add(new Album(a));
         }
 
+        Collections.sort(temp, Comparator.comparing(Album::getTitle));
         return temp;
     }
 
     public ArrayList<String> getAllArtists() {
-<<<<<<< HEAD
         ArrayList<String> temp = new ArrayList<>();
 
         for (Album a : albumList) {
@@ -189,36 +165,11 @@ public class MusicStore {
         }
 
         //remove duplicated using a set
-        Set<String> temp2 = new HashSet<>(temp); 
+        HashSet<String> temp2 = new HashSet<String>(temp); 
         temp = new ArrayList<>(temp2); 
 
         return temp;
-=======
-        return new ArrayList<>();
->>>>>>> 5a677756ac0b0132d171f5468390a71f7bbea14b
     }
-
-    /*
-    public List<String> getAllSongs() {
-        List<String> sortedKeys = new ArrayList<>();
-        titleToSongMap.values().forEach(song -> sortedKeys.add(song.getTitle() + " by " + song.getArtist() + " on the album \"" + song.getAlbumTitle() + "\""));
-        Collections.sort(sortedKeys);
-        return sortedKeys;
-    }
-
-    public List<String> getAllAlbums() {
-        List<String> sortedKeys = new ArrayList<>();
-        titleToAlbumMap.values().forEach(album -> sortedKeys.add(album.getAlbumTitle() + " : " + album.getArtist()));
-        Collections.sort(sortedKeys);
-        return sortedKeys;
-    }
-
-    public List<String> getAllArtists() {
-        List<String> sortedKeys = new ArrayList<>(artistToAlbumMap.keySet());
-        Collections.sort(sortedKeys);
-        return sortedKeys;
-    }
-    */
 }
 //   "bruh!"
 //     /
