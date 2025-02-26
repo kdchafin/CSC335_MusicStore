@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class MusicStoreMenu extends Menu {
     public MusicStoreMenu(Menu previousMenu) {
+        //TODO: add a menu option to search for an artist and add them to the library? the spec is confusing on this. 
         super("""
         [1] Search for Songs By Title
         [2] Search for Albums By Title
@@ -18,8 +19,8 @@ public class MusicStoreMenu extends Menu {
         defaultOption = () -> { previousMenu.executeMenu(); };
         addOption(1, "search for songs by title", () -> { searchForSongsByTitle(); executeMenu();});
         addOption(2, "search for albums by title", () -> { searchForAlbumsByTitle(); executeMenu();});
-        addOption(3, "search for songs by artist", () -> { System.out.println("Search for Songs by Artist"); executeMenu();});
-        addOption(4, "search for albums by artist", () -> { System.out.println("Search for Albums by Artist"); executeMenu();});
+        addOption(3, "search for songs by artist", () -> { System.out.println("Search for Songs by Artist"); executeMenu();}); //TODO: search for songs by artist in MusicStoreMenu
+        addOption(4, "search for albums by artist", () -> { System.out.println("Search for Albums by Artist"); executeMenu();}); //TODO: search for albums by artist in MusicStoreMenu
         addOption(5, "list all songs", () -> { listAllSongs(); executeMenu(); });
         addOption(6, "list all albums", () -> { listAllAlbums(); executeMenu(); });
         addOption(7, "list all artists", () -> { listAllArtists(); executeMenu(); });
@@ -30,13 +31,17 @@ public class MusicStoreMenu extends Menu {
         System.out.println("Enter a song title: ");
         String title = in.nextLine();
         MusicStore musicStore = MusicStore.getInstance();
-        ArrayList<Song> song = musicStore.getSongByTitle(title);
-        if(song != null) {
-            System.out.println(song.get(0));
-            //SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, song); 
-            //selectedSongMenu.executeMenu();
-        } else {
+        ArrayList<Song> songs = musicStore.getSongByTitle(title);
+
+        if(songs.size() == 0) {
             System.out.println("Song not found");
+        } else if (songs.size() == 1) {
+            System.out.println(songs.get(0));
+            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0));
+            selectedSongMenu.executeMenu();
+        } else if (songs.size() > 1) {
+            MultiSongMenu multiSongMenu = new MultiSongMenu(this, songs);
+            multiSongMenu.executeMenu();
         }
     }
 
@@ -47,14 +52,16 @@ public class MusicStoreMenu extends Menu {
         MusicStore musicStore = MusicStore.getInstance();
 
         ArrayList<Album> album = musicStore.getAlbumByTitle(title);
+        //TODO: implement library + album functionality; the only thing we need is to add the album to the library, no rating or anything else. 
         if(album.size() == 0) {
             //TODO: print song not found
         }
         else if (album.size() == 1) {
-            //TODO: print the song
+            //TODO: print the album and ask if the user wants to add it to the library
         }
         else {
-            //TODO: prompt the user which song they are refering to
+            //TODO: get the user input to select an album and add it to the library 
+            //IMPORTANT: use nextLine() to get the input, not nextInt()! refer to LibraryMenu option 7 if confused
         }
     }
 

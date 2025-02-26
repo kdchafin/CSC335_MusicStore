@@ -5,7 +5,12 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Scanner;
+<<<<<<< HEAD
 import java.util.Set;
+=======
+import java.util.Comparator;
+import java.util.HashSet;
+>>>>>>> 5a677756ac0b0132d171f5468390a71f7bbea14b
 
 public class MusicStore {
 
@@ -108,7 +113,7 @@ public class MusicStore {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
-            if (s.getTitle() == title) temp.add(s);
+            if (s.getTitle().equalsIgnoreCase(title)) temp.add(s);
         }
         return temp;
     }
@@ -120,7 +125,7 @@ public class MusicStore {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
-            if (s.getArtist() == artist) temp.add(s);
+            if (s.getArtist().equalsIgnoreCase(artist)) temp.add(s);
         }
         return temp;
     }
@@ -132,7 +137,7 @@ public class MusicStore {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {
-            if (a.getTitle() == title) temp.add(a);
+            if (a.getTitle().equalsIgnoreCase(title)) temp.add(a);
         }
         return temp;
     }
@@ -144,20 +149,24 @@ public class MusicStore {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {
-            if (a.getArtist() == artist) temp.add(a);
+            if (a.getArtist().equalsIgnoreCase(artist)) temp.add(a);
         }
         return temp;
     }
 
+<<<<<<< HEAD
     //TODO: remove references for the 3 functions below
     
+=======
+>>>>>>> 5a677756ac0b0132d171f5468390a71f7bbea14b
     public ArrayList<Song> getAllSongs() {
         ArrayList<Song> temp = new ArrayList<>();
-
+        // duplicate = "lullaby"
         for (Song s : songList) {
             temp.add(s);
         }
-
+        // System.out.println(titles.size());
+        Collections.sort(temp, Comparator.comparing(Song::getTitle));
         return temp;
     }
 
@@ -172,6 +181,7 @@ public class MusicStore {
     }
 
     public ArrayList<String> getAllArtists() {
+<<<<<<< HEAD
         ArrayList<String> temp = new ArrayList<>();
 
         for (Album a : albumList) {
@@ -183,6 +193,9 @@ public class MusicStore {
         temp = new ArrayList<>(temp2); 
 
         return temp;
+=======
+        return new ArrayList<>();
+>>>>>>> 5a677756ac0b0132d171f5468390a71f7bbea14b
     }
 
     /*

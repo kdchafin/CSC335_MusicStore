@@ -39,21 +39,37 @@ public class LibraryModel {
         return playlists;
     }
 
-    public void createPlaylist(String name) {
+    public String createPlaylist(String name) {
+        for(Playlist pl : playlists) {
+            if(pl.getName().equals(name)) {
+                return "A playlist named \"" + name + "\" already exists."; 
+            }
+        }
         playlists.add(new Playlist(name));
+        return "Playlist \"" + name + "\" created successfully.";
+    }
+
+    public String deletePlaylist(String name) {
+        for(Playlist pl : playlists) {
+            if(pl.getName().equals(name)) {
+                playlists.remove(pl);
+                return "Playlist \"" + name + "\" deleted successfully.";
+            }
+        }
+        return "There is no playlist named \"" + name + "\".";
     }
 
     public String addSongToPlaylist(Song song, String name) {
         for (Playlist pl : playlists) {
             if (pl.getName().equals(name)) {
                 pl.addSong(song);
-                return "Song Added To " + pl.getName() + " successfully!";
+                return "Song added to " + pl.getName() + " successfully!";
             }
         }
-        return "No Playlist With That Name Found.";
+        return "There is no playlist named \"" + name + "\".";
     }
 
-    public String removeSongToPlaylist(Song song, String name) {
+    public String removeSongFromPlaylist(Song song, String name) {
         for (Playlist pl : playlists) {
             if (pl.getName().equals(name)) {
                 pl.removeSong(song);

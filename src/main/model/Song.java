@@ -4,6 +4,8 @@ public class Song extends Album {
     private String title;
     private int rating;
     private boolean isFavorite = false;
+    String[] emojiRatings = {"🔥", "🔥🔥", "🔥🔥🔥", "🔥🔥🔥🔥", "🔥🔥🔥🔥🔥"};
+    private Album album;
 
     public Song(String title, Album album) {
         super(album.getTitle(),
@@ -11,6 +13,7 @@ public class Song extends Album {
               album.getGenre(), 
               album.getYear());
         this.title = title;
+        this.album = album;
     }
     
     public String getTitle() {
@@ -19,7 +22,12 @@ public class Song extends Album {
     
     @Override
     public String toString() {
-        return this.title + " by " + this.getArtist() + " on the album \"" + this.getTitle() + "\"";
+        StringBuilder sb = new StringBuilder();
+        sb.append(this.title + " by " + this.getArtist() + " on the album \"" + album.getTitle() + "\"");
+        if(this.rating != 0) {
+            sb.append(" [" + emojiRatings[this.rating-1] + "]");
+        }
+        return sb.toString(); 
     }
 
     public int getRating() {
@@ -54,7 +62,7 @@ public class Song extends Album {
         Song other = (Song) obj;
         return this.getTitle().equals(other.getTitle()) 
             && this.getArtist().equals(other.getArtist()) 
-            && this.getTitle().equals(other.getTitle())
-            && this.getGenre().equals(other.getTitle());
+            && this.album.getTitle().equals(other.album.getTitle())
+            && this.getGenre().equals(other.getGenre());
     }
 }

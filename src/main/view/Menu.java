@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public abstract class Menu { 
     private static Scanner in;
-    protected final String menu;
+    protected String menu;
     protected final HashMap<String, Runnable> options;
     protected final HashMap<Integer, Runnable> numberedOptions;
     protected Runnable defaultOption;
