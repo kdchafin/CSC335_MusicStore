@@ -12,11 +12,27 @@ public class Playlist {
         plSonglist = new ArrayList<Song>();
     }
 
+    public Playlist(Playlist playlist) {
+        this.plName = playlist.getName();
+        plSonglist = new ArrayList<Song>(playlist.plSonglist);
+    }
+
+    public ArrayList<Song> getSongList() {
+        ArrayList<Song> temp = new ArrayList<>();
+        for(Song s : plSonglist) {
+            temp.add(new Song(s));
+        }
+        return temp;
+    }
+
     public String getName() {
         return this.plName;
     }
 
     public void addSong(Song song) {
+        for(Song s : plSonglist) {
+            if(s.equals(song)) return;
+        }
         plSonglist.add(song);
     }
 
