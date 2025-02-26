@@ -27,7 +27,7 @@ public class MusicStore {
     }
 
     /*
-     * Generate both hashmaps of album and song objects for reference in code. 
+     * Generate both lists of album and song objects for reference in code. 
      */
     public void generateDataset() {
         Scanner fileScanner = null;

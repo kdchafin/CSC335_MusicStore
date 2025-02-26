@@ -33,8 +33,8 @@ public class MusicStoreMenu extends Menu {
         ArrayList<Song> song = musicStore.getSongByTitle(title);
         if(song != null) {
             System.out.println(song.get(0));
-            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, song); 
-            selectedSongMenu.executeMenu();
+            //SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, song); 
+            //selectedSongMenu.executeMenu();
         } else {
             System.out.println("Song not found");
         }

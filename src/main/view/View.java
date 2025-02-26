@@ -14,7 +14,7 @@ public class View {
     public static void main(String[] args) throws FileNotFoundException {
         LibraryModel library = LibraryModel.getInstance();
         MusicStore musicStore = MusicStore.getInstance();
-        musicStore.generateData();
+        musicStore.generateDataset();
         // Song rockYouLikeAHurricane = new Song("Rock You Like A Hurricane", new Album("Love At First Sting", "The Scorpions", "Rock", 1984));
         // rockYouLikeAHurricane.setRating(5);
         // Song noOneLikeYou = new Song("No One Like You", new Album("Blackout", "The Scorpions", "Rock", 1982));
