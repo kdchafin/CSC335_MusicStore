@@ -9,6 +9,7 @@ public class Playlist {
 
     public Playlist(String name) {
         this.plName = name;
+        plSonglist = new ArrayList<Song>();
     }
 
     public String getName() {
@@ -19,22 +20,24 @@ public class Playlist {
         plSonglist.add(song);
     }
 
-    public void removeSong(Song song) {
-        plSonglist.remove(song);
+    public Song removeSong(Song song) {
+        boolean temp = plSonglist.remove(song);
+        return temp ? song : null;
+    }
+
+    public Song removeSong(int index) {
+        return plSonglist.remove(index);
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.plName + "\n[" + String.valueOf(plSonglist.size() + " Songs]\n"));
+        sb.append(this.plName + ":\n");
+        int index = 0;
         for(Song s: plSonglist) {
-            sb.append(s.toString());
+            index++;
+            sb.append(String.valueOf(index) + ". " + s.toString() + "\n");
         }
         return sb.toString();
     }
-}
-    private String playlistName;
-    private ArrayList<Song> songs;
-
-    
 }
