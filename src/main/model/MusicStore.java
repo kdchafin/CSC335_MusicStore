@@ -7,6 +7,8 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
+import java.util.Comparator;
+import java.util.HashSet;
 
 public class MusicStore {
 
@@ -103,7 +105,7 @@ public class MusicStore {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
-            if (s.getTitle() == title) temp.add(s);
+            if (s.getTitle().equalsIgnoreCase(title)) temp.add(s);
         }
         return temp;
     }
@@ -115,7 +117,7 @@ public class MusicStore {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
-            if (s.getArtist() == artist) temp.add(s);
+            if (s.getArtist().equalsIgnoreCase(artist)) temp.add(s);
         }
         return temp;
     }
@@ -127,7 +129,7 @@ public class MusicStore {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {
-            if (a.getTitle() == title) temp.add(a);
+            if (a.getTitle().equalsIgnoreCase(title)) temp.add(a);
         }
         return temp;
     }
@@ -139,18 +141,19 @@ public class MusicStore {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {
-            if (a.getArtist() == artist) temp.add(a);
+            if (a.getArtist().equalsIgnoreCase(artist)) temp.add(a);
         }
         return temp;
     }
 
-    public ArrayList getAllSongs() {
+    public ArrayList<Song> getAllSongs() {
         ArrayList<Song> temp = new ArrayList<>();
-
+        // duplicate = "lullaby"
         for (Song s : songList) {
             temp.add(s);
         }
-
+        // System.out.println(titles.size());
+        Collections.sort(temp, Comparator.comparing(Song::getTitle));
         return temp;
     }
 
@@ -164,7 +167,9 @@ public class MusicStore {
         return temp;
     }
 
-    public ArrayList<String> getAllArtists
+    public ArrayList<String> getAllArtists() {
+        return new ArrayList<>();
+    }
 
     /*
     public List<String> getAllSongs() {
