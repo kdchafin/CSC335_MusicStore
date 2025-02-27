@@ -24,23 +24,24 @@ public class Album {
         this.artist = album.getArtist();
         this.genre = album.getGenre();
         this.yearReleased = album.getYear();
-        this.songsOnAlbum = album.getSongsOnAlbum();
+        this.songsOnAlbum = album.getAlbumSongs();
     }
 
+    //WARNING: All getters from this class return references to the original objects
     public int getYear() {
-        return this.yearReleased;
+        return yearReleased;
     }
 
     public String getArtist() {
-        return this.artist;
+        return artist;
     }
 
     public String getGenre() {
-        return this.genre;
+        return genre;
     }
 
     public String getTitle() {
-        return this.albumTitle;
+        return albumTitle;
     }
 
     public void addSong(Song song) {
@@ -52,7 +53,7 @@ public class Album {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         sb.append(this.getTitle() + " by " + this.getArtist());
-        for(Song song : this.getSongsOnAlbum()) {
+        for(Song song : this.getAlbumSongs()) {
             index++;
             sb.append("\n" + index + ". " + song.getTitle());
         }
@@ -60,8 +61,8 @@ public class Album {
         return sb.toString();
     }
 
-    public ArrayList<Song> getSongsOnAlbum() {
-        return new ArrayList<Song>(songsOnAlbum);
+    public ArrayList<Song> getAlbumSongs() {
+        return songsOnAlbum;
     }
 
     @Override
@@ -80,6 +81,6 @@ public class Album {
             && this.getArtist().equals(other.getArtist()) 
             && this.getGenre().equals(other.getGenre())
             && this.getYear() == other.getYear()
-            && this.getSongsOnAlbum().equals(other.getSongsOnAlbum());
+            && this.getAlbumSongs().equals(other.getAlbumSongs());
     }
 }

@@ -33,13 +33,12 @@ public class SelectedSongMenu extends Menu {
         Scanner in = Menu.getScanner();
         System.out.println("Enter a playlist name: ");
         String name = in.nextLine();
-        String result = library.addSongToPlaylist(this.song, name);
-        System.out.println(result);
+        library.addSongToPlaylist(this.song, name);
+        System.out.println("Song Added To " + name + " uccessfully");
     }
 
     private void markSongAsFavorite() {
-        this.song.setRating(5);
-        library.addSong(this.song);
+        library.setRating(this.song, 5);
         System.out.println(this.song.getTitle() + " Marked As Favorite!");
     }
 

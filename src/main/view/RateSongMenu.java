@@ -6,6 +6,7 @@ import main.model.LibraryModel;
 public class RateSongMenu extends Menu {
     private Song song;
     private Menu previousMenu;
+    private LibraryModel lm = LibraryModel.getInstance();
     public RateSongMenu(Menu previousMenu, Song song) {
         super("""
         [1] Rate Song 1/5
@@ -26,9 +27,8 @@ public class RateSongMenu extends Menu {
 
     private void rateSong(int rating) {
         System.out.println("You rated the song " + song.getTitle() + " with " + rating + "/5");
-        this.song.setRating(rating);
-        LibraryModel.getInstance().addSong(this.song);
+
+        lm.setRating(song, rating);
         previousMenu.executeMenu();
     }
-    
 }

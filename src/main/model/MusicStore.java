@@ -12,8 +12,8 @@ public class MusicStore {
 
     private static MusicStore instance;
 
-    private ArrayList<Album> albumList;
-    private ArrayList<Song> songList;
+    protected ArrayList<Album> albumList;
+    protected ArrayList<Song> songList;
 
     public MusicStore() {
         this.albumList = new ArrayList<>();
@@ -82,6 +82,28 @@ public class MusicStore {
         }
     }
 
+//----------------------   Referenced getter methods  ----------------------
+
+    protected Song getSong(Song song) {
+        for (Song s : this.songList) {
+            if (s.equals(song)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
+    protected Album getAlbum(Album album) {
+        for (Album a : this.albumList) {
+            if (a.equals(album)) {
+                return a;
+            }
+        }
+        return null;
+    }
+
+// ----------------------  Datagen methods  ----------------------
+
     public void addAlbumToList(Album album) {
         albumList.add(album);
     }
@@ -90,10 +112,8 @@ public class MusicStore {
         songList.add(song);
     }
 
-    /*
-     * getSongByTitle: returns all songs of a given title
-     * returns songs in a ArrayList<Song>
-     */
+//----------------------   All Dereferenced getter methods  ----------------------
+
     public ArrayList<Song> getSongByTitle(String title) {
         ArrayList<Song> temp = new ArrayList<>();
 
@@ -103,9 +123,6 @@ public class MusicStore {
         return temp;
     }
 
-    /* getSongByArtist: returns all songs of a given artist
-     * returns all songs in a ArrayList<Song> 
-     */
     public ArrayList<Song> getSongByArtist(String artist) {
         ArrayList<Song> temp = new ArrayList<>();
 
@@ -115,9 +132,6 @@ public class MusicStore {
         return temp;
     }
 
-    /* getAlbumByTitle: returns all albums of a given title
-     * returns albums in a ArrayList<Album>
-     */
     public ArrayList<Album> getAlbumByTitle(String title) {
         ArrayList<Album> temp = new ArrayList<>();
 
@@ -127,9 +141,6 @@ public class MusicStore {
         return temp;
     }
 
-    /* getAlbumByArtist: returns all albums by a given artist
-     * returns albums in a ArrayList<Album>
-     */
     public ArrayList<Album> getAlbumByArtist(String artist) {
         ArrayList<Album> temp = new ArrayList<>();
 
@@ -178,3 +189,5 @@ public class MusicStore {
 //   "bruh!"
 //     /
 // (^.^) 
+
+// how is the cat still even here?

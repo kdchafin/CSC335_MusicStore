@@ -54,6 +54,7 @@ public abstract class Menu {
         System.out.println(menu);
         System.out.println("---------------");
         String input = in.nextLine();
+        
         if(input.equals("")) {
             defaultOption.run();
         }
