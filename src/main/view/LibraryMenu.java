@@ -60,6 +60,7 @@ public class LibraryMenu extends Menu {
         printEachElement(library.getSongs(), "song");
     }
 
+    //TODO: this doesnt work properly. If a song is favortied in the store, the song object here doesnt reference the stores song object.
     private void getFavoriteSongs() {
         ArrayList<Song> favoriteSongs = library.getFavoriteSongs();
         String plural = favoriteSongs.size() == 1 ? "" : "s";
@@ -83,9 +84,11 @@ public class LibraryMenu extends Menu {
         Scanner in = Menu.getScanner();
         System.out.println("Enter a playlist name: ");
         String name = in.nextLine();
+
         ArrayList<Playlist> playlists = library.getPlaylists();
         Playlist playlist = null;
         boolean foundPlaylist = false;
+
         for(Playlist pl : playlists) {
             if(pl.getName().equals(name)) {
                 foundPlaylist = true;
@@ -100,8 +103,10 @@ public class LibraryMenu extends Menu {
         }
         System.out.println("What number song would you like to remove from the playlist?");
         int index = Integer.parseInt(in.nextLine());
+
         try { 
             Song song = playlist.removeSong(index-1); 
+            library.removeSongFromPlaylist(song, name);
             System.out.println(song.getTitle() + " removed from " + playlist.getName());
         } catch (IndexOutOfBoundsException e) { 
             System.out.println("There is no song at that index"); 

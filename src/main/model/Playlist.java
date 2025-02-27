@@ -17,7 +17,7 @@ public class Playlist {
         plSonglist = new ArrayList<Song>(playlist.plSonglist);
     }
 
-    public ArrayList<Song> getSongList() {
+    public ArrayList<Song> getSongListSafe() {
         ArrayList<Song> temp = new ArrayList<>();
         for(Song s : plSonglist) {
             temp.add(new Song(s));
@@ -30,7 +30,7 @@ public class Playlist {
     }
 
     public void addAlbum(Album album) {
-        for(Song s : album.getSongsOnAlbum()) {
+        for(Song s : album.getAlbumSongs()) {
             addSong(s);
         }
     }
@@ -47,6 +47,8 @@ public class Playlist {
         return temp ? song : null;
     }
 
+
+    //TODO: need a reference to the origional pList
     public Song removeSong(int index) {
         return plSonglist.remove(index);
     }

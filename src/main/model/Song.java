@@ -24,12 +24,21 @@ public class Song extends Album {
         this.isFavorite = song.isFavorite();
     }
 
+    //WARNING: all getters in this class return references to the original objects
+    public int getRating() {
+        return rating;
+    }
+
     public String getTitle() {
         return title;
     }
 
     public Album getAlbum() {
-        return new Album(album);
+        return album;
+    }
+
+    public boolean isFavorite() {
+        return isFavorite;
     }
     
     @Override
@@ -47,10 +56,6 @@ public class Song extends Album {
         return sb.toString(); 
     }
 
-    public int getRating() {
-        return rating;
-    }
-
     public void setRating(int rating) {
         if(rating < 1 || rating > 5) {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
@@ -59,10 +64,6 @@ public class Song extends Album {
             this.isFavorite = true;
         }
         this.rating = rating;
-    }
-
-    public boolean isFavorite() {
-        return isFavorite;
     }
     
     @Override

@@ -69,6 +69,21 @@ public class MusicStoreMenu extends Menu {
         }
     }
 
+    //TODO: NOT FINISHED
+    private void searchForSongsByArtist() {
+        Scanner in = Menu.getScanner();
+        System.out.println("Enter an artist name: ");
+        String artist = in.nextLine();
+        MusicStore musicStore = MusicStore.getInstance();
+        ArrayList<Song> songs = musicStore.getSongByArtist(artist);
+
+        if(songs.size() == 0) {
+            System.out.println("No songs found for artist: " + artist);
+        }
+        System.out.println(songs.size() + " Songs Found:");
+        printEachElement(songs);
+    }
+
     private void listAllSongs() {
         ArrayList<Song> songs = MusicStore.getInstance().getAllSongs();
         System.out.println(songs.size() + " Songs Found:");
@@ -78,7 +93,10 @@ public class MusicStoreMenu extends Menu {
     private void listAllAlbums() {
         ArrayList<Album> albums = MusicStore.getInstance().getAllAlbums();
         System.out.println(albums.size() + " Albums Found:");
-        printEachElement(albums);
+        for (Album album : albums) {
+            System.out.println("- " + album.getTitle() + " by " + album.getArtist() + ", " + album.getAlbumSongs().size() + " songs");
+        }
+        //printEachElement(albums);
     }
 
     private void listAllArtists() {
