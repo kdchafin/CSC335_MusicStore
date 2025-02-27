@@ -17,14 +17,6 @@ public class Playlist {
         plSonglist = new ArrayList<Song>(playlist.plSonglist);
     }
 
-    public ArrayList<Song> getSongListSafe() {
-        ArrayList<Song> temp = new ArrayList<>();
-        for(Song s : plSonglist) {
-            temp.add(new Song(s));
-        }
-        return temp;
-    }
-
     public String getName() {
         return this.plName;
     }

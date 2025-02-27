@@ -85,17 +85,17 @@ public class LibraryModel extends MusicStore{
         return temp;
     }
 
-    public ArrayList<Album> getAlbums() {
-        Set<Album> temp = new HashSet<>();
+    public ArrayList<String> getAlbums() {
+        HashSet<String> temp = new HashSet<>();
 
-        for(Song s : this.songs) {
-            temp.add(new Album (s.getAlbum()));
+        for(Song s : songs) {
+            temp.add(s.getAlbum().getTitle());
         }
-        return new ArrayList<Album>(temp);
+        return new ArrayList<String>(temp);
     }
 
     public ArrayList<String> getArtists() {
-        Set<String> temp = new HashSet<>();
+        HashSet<String> temp = new HashSet<>();
         for (Song s : songs) {
             temp.add(s.getArtist()); //string is immutable by nature
         }
