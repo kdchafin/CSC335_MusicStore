@@ -12,14 +12,9 @@ public class View {
      * Search from user library. 
      */
     public static void main(String[] args) throws FileNotFoundException {
-        LibraryModel library = LibraryModel.getInstance();
         MusicStore musicStore = MusicStore.getInstance();
         musicStore.generateDataset();
-        // Song rockYouLikeAHurricane = new Song("Rock You Like A Hurricane", new Album("Love At First Sting", "The Scorpions", "Rock", 1984));
-        // rockYouLikeAHurricane.setRating(5);
-        // Song noOneLikeYou = new Song("No One Like You", new Album("Blackout", "The Scorpions", "Rock", 1982));
-        // library.addSong(rockYouLikeAHurricane);
-        // library.addSong(noOneLikeYou);
+
         MainMenu mainMenu = new MainMenu();
         mainMenu.executeMenu();
     }

@@ -83,4 +83,3 @@ public class Album {
             && this.getSongsOnAlbum().equals(other.getSongsOnAlbum());
     }
 }
-

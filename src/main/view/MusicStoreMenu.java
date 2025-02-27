@@ -35,10 +35,12 @@ public class MusicStoreMenu extends Menu {
 
         if(songs.size() == 0) {
             System.out.println("Song not found");
+
         } else if (songs.size() == 1) {
             System.out.println(songs.get(0));
             SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0));
             selectedSongMenu.executeMenu();
+            
         } else if (songs.size() > 1) {
             MultiSongMenu multiSongMenu = new MultiSongMenu(this, songs);
             multiSongMenu.executeMenu();
@@ -51,17 +53,19 @@ public class MusicStoreMenu extends Menu {
         String title = in.nextLine();
         MusicStore musicStore = MusicStore.getInstance();
 
-        ArrayList<Album> album = musicStore.getAlbumByTitle(title);
-        //TODO: implement library + album functionality; the only thing we need is to add the album to the library, no rating or anything else. 
-        if(album.size() == 0) {
-            //TODO: print song not found
+        ArrayList<Album> albums = musicStore.getAlbumByTitle(title);
+    
+        if(albums.size() == 0) {
+            System.out.println("Album not found");
         }
-        else if (album.size() == 1) {
-            //TODO: print the album and ask if the user wants to add it to the library
+        else if (albums.size() == 1) {
+            System.out.println(albums.get(0));
+            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0));
+            selectedAlbumMenu.executeMenu();
         }
         else {
-            //TODO: get the user input to select an album and add it to the library 
-            //IMPORTANT: use nextLine() to get the input, not nextInt()! refer to LibraryMenu option 7 if confused
+            MultiAlbumsMenu multiAlbumMenu = new MultiAlbumsMenu(this, albums);
+            multiAlbumMenu.executeMenu();
         }
     }
 

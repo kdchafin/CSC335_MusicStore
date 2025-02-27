@@ -35,7 +35,12 @@ public class Song extends Album {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(this.title + " by " + this.getArtist() + " on the album \"" + album.getTitle() + "\"");
+        sb.append(this.title + " by " + 
+                  this.getArtist() + ", \"" + 
+                  album.getTitle() + "\" (" + 
+                  album.getYear() + ")" + " [" + 
+                  this.getGenre() + "]");
+
         if(this.rating != 0) {
             sb.append(" [" + emojiRatings[this.rating-1] + "]");
         }
