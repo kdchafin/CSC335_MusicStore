@@ -36,7 +36,7 @@ public class MusicStore {
         try {
             fileScanner = new Scanner(albumFile);
         } catch (FileNotFoundException e) {
-            System.out.println("File not found: albums/albums.txt");
+            System.err.println("File not found: albums/albums.txt");
             System.exit(0);
         }
         
@@ -55,7 +55,7 @@ public class MusicStore {
             try {
                 albumScanner = new Scanner(nameFile);
             } catch (FileNotFoundException e) {
-                System.out.println("File not found: " + s);
+                System.err.println("File not found: " + s);
                 System.exit(0);
             }
             String currLine = albumScanner.nextLine();
@@ -90,6 +90,10 @@ public class MusicStore {
         songList.add(song);
     }
 
+    /*
+     * getSongByTitle: returns all songs of a given title
+     * returns songs in a ArrayList<Song>
+     */
     public ArrayList<Song> getSongByTitle(String title) {
         ArrayList<Song> temp = new ArrayList<>();
 

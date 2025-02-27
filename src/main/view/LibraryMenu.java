@@ -21,13 +21,37 @@ public class LibraryMenu extends Menu {
         defaultOption = () -> { previousMenu.executeMenu(); };
 
         addOption(1, "get songs", () -> { getSongs(); executeMenu(); });
-        addOption(2, "get albums", () -> { System.out.println("Get Albums"); executeMenu(); }); //TODO: Add Get Albums Functionality For The Library
-        addOption(3, "get artists", () -> { System.out.println("Get Artists"); executeMenu(); }); //TODO: Add Get Artists Functionality For The Library
+        addOption(2, "get albums", () -> { getAlbums(); executeMenu(); });
+        addOption(3, "get artists", () -> { getArtists(); executeMenu(); });
         addOption(4, "get playlists", () -> { printEachElement(library.getPlaylists(), "playlist"); executeMenu(); });
         addOption(5, "get favorite songs", () -> { getFavoriteSongs(); executeMenu(); });
         addOption(6, "create a playlist", () -> { createPlaylist(); executeMenu(); });
         addOption(7, "remove a song from a playlist", () -> { editPlaylist(); executeMenu(); });
         addOption(8, "delete a playlist", () -> { deletePlaylist(); executeMenu(); });
+    }
+
+    private void getArtists() {
+        ArrayList<String> artists = library.getArtists();
+        String plural = artists.size() == 1 ? "" : "s";
+        if(artists.size() == 0) {
+            System.out.println("You have no artists in your library.");
+        } else {
+            System.out.println("You have " + artists.size() + " artist" + plural + ":");
+            printEachElement(artists, "artist");
+        }
+    }
+
+    private void getAlbums() {
+        ArrayList<Album> albums = library.getAlbums();
+        String plural = albums.size() == 1 ? "" : "s";
+        if(albums.size() == 0) {
+            System.out.println("You have no albums in your library.");
+        } else {
+            System.out.println("You have " + albums.size() + " album" + plural + ":");
+            for (Album album : albums) {
+                System.out.println("- " + album.getTitle() + " by " + album.getArtist());
+            }
+        }
     }
 
     private void getSongs() {

@@ -29,6 +29,12 @@ public class Playlist {
         return this.plName;
     }
 
+    public void addAlbum(Album album) {
+        for(Song s : album.getSongsOnAlbum()) {
+            addSong(s);
+        }
+    }
+
     public void addSong(Song song) {
         for(Song s : plSonglist) {
             if(s.equals(song)) return;
