@@ -42,14 +42,14 @@ public class LibraryMenu extends Menu {
     }
 
     private void getAlbums() {
-        ArrayList<Album> albums = library.getAlbums();
+        ArrayList<String> albums = library.getAlbums();
         String plural = albums.size() == 1 ? "" : "s";
         if(albums.size() == 0) {
             System.out.println("You have no albums in your library.");
         } else {
             System.out.println("You have " + albums.size() + " album" + plural + ":");
-            for (Album album : albums) {
-                System.out.println("- " + album.getTitle() + " by " + album.getArtist());
+            for (String albumName : albums) {
+                System.out.println("- " + albumName);
             }
         }
     }

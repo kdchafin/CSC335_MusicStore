@@ -50,11 +50,12 @@ public abstract class Menu {
 
     public void executeMenu() {
         Scanner in = getScanner();
-        System.out.println("---------------");
+        System.out.println("----------------------------");
+        System.out.println("[*] Enter Nothing To Go Back\n");
         System.out.println(menu);
-        System.out.println("---------------");
+        System.out.println("----------------------------");
         String input = in.nextLine();
-        
+
         if(input.equals("")) {
             defaultOption.run();
         }
