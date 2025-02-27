@@ -15,9 +15,21 @@ public class Song extends Album {
         this.title = title;
         this.album = album;
     }
-    
+
+    public Song(Song song) {
+        super(song);
+        this.title = song.getTitle();
+        this.album = song.album;
+        this.rating = song.getRating();
+        this.isFavorite = song.isFavorite();
+    }
+
     public String getTitle() {
         return title;
+    }
+
+    public Album getAlbum() {
+        return new Album(album);
     }
     
     @Override

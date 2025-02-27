@@ -18,6 +18,15 @@ public class Album {
         this.yearReleased = yearReleased;
     }
 
+    // copy constructor
+    public Album(Album album) {
+        this.albumTitle = album.getTitle();
+        this.artist = album.getArtist();
+        this.genre = album.getGenre();
+        this.yearReleased = album.getYear();
+        this.songsOnAlbum = album.getSongsOnAlbum();
+    }
+
     public int getYear() {
         return this.yearReleased;
     }
@@ -41,18 +50,37 @@ public class Album {
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        int index = 1;
+        int index = 0;
         sb.append(this.getTitle() + " by " + this.getArtist());
         for(Song song : this.getSongsOnAlbum()) {
-            sb.append("\n" + index + ". " + song.getTitle());
             index++;
+            sb.append("\n" + index + ". " + song.getTitle());
         }
 
         return sb.toString();
     }
 
     public ArrayList<Song> getSongsOnAlbum() {
-        return songsOnAlbum;
+        return new ArrayList<Song>(songsOnAlbum);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) {
+            return true;
+        }
+        if(obj == null) {
+            return false;
+        }
+        if(!(obj instanceof Album)) {
+            return false;
+        }
+        Album other = (Album) obj;
+        return this.getTitle().equals(other.getTitle()) 
+            && this.getArtist().equals(other.getArtist()) 
+            && this.getGenre().equals(other.getGenre())
+            && this.getYear() == other.getYear()
+            && this.getSongsOnAlbum().equals(other.getSongsOnAlbum());
     }
 }
 

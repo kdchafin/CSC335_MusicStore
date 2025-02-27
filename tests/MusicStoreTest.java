@@ -2,13 +2,11 @@ package tests;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import main.model.Album;
-import main.model.MusicStore;
-import main.model.Song;
+import main.model.*;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
-public class testMusicStore {
+public class MusicStoreTest {
     private MusicStore ms;
     private Album album;
     private Song song;
@@ -76,5 +74,17 @@ public class testMusicStore {
         List<String> artists = ms.getAllArtists();
         assertFalse(artists.isEmpty());
         assertTrue(artists.contains("Test Artist"));
+    }
+
+    @Test
+    public void testGenerateDataset() {
+        MusicStore ms = new MusicStore();
+        ms.generateDataset();
+        assertFalse(ms.getAllSongs().isEmpty());
+        assertFalse(ms.getAllAlbums().isEmpty());
+        assertFalse(ms.getAllArtists().isEmpty());
+        assertEquals(ms.getAllSongs().size(), 163); // 163 songs
+        assertEquals(ms.getAllAlbums().size(), 15); // 15 albums
+        assertEquals(ms.getAllArtists().size(), 14); // 14 artists
     }
 }
