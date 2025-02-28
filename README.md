@@ -2,5 +2,5 @@
 
 ### Made By Andy Siegel and Kieran Chafin 
 
-Link To UML Diagram:
+![Class Diagram](CSC335_MusicStore.svg)
 Link To Video:
