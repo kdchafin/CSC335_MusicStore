@@ -2,9 +2,8 @@ package main.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
 
-public class LibraryModel extends MusicStore{
+public class LibraryModel extends MusicStore {
 
     private static LibraryModel instance;
     private final MusicStore ms;
@@ -44,17 +43,18 @@ public class LibraryModel extends MusicStore{
     }
 
     // add referenced copies from a dereferenced object
-    public void addSongToPlaylist(Song song, String name) {
+    public String addSongToPlaylist(Song song, String name) {
         Song s = ms.getSong(song);
 
-        if (!songs.contains(s)) return;
+        if (!songs.contains(s)) return s.getTitle() + " not found in the library";
 
         for (Playlist pl : playlists) {
             if (pl.getName().equals(name)) {
                 pl.addSong(s);
-                return;
+                return s.getTitle() + " added to " + pl.getName() + " successfully!";
             }
         }
+        return "There is no playlist named \"" + name + "\".";
     }
 
     // rate referenced copies from a dereferenced object (if it exists in the library)
@@ -89,7 +89,7 @@ public class LibraryModel extends MusicStore{
         HashSet<String> temp = new HashSet<>();
 
         for(Song s : songs) {
-            temp.add(s.getAlbum().getTitle());
+            temp.add(s.getAlbum().getTitle() + " by " + s.getAlbum().getArtist() + " [" + s.getAlbum().getAlbumSongs().size() + " songs]");
         }
         return new ArrayList<String>(temp);
     }
@@ -150,5 +150,50 @@ public class LibraryModel extends MusicStore{
             }
         }
         return "There is no playlist named \"" + name + "\".";
+    }
+
+// ----------------------  Search methods  ----------------------
+
+    public ArrayList<Song> getSongsByTitle(String title) {
+        ArrayList<Song> dereferencedSongs = new ArrayList<>();
+        for(Song song : songs) {
+            if(song.getTitle().equalsIgnoreCase(title)) {
+                dereferencedSongs.add(new Song(song));
+            }
+        }
+        return dereferencedSongs;
+    }
+
+    public ArrayList<Album> getAlbumsByTitle(String title) {
+        ArrayList<Album> albums = new ArrayList<>();
+        for(Song s: songs) {
+            if(s.getAlbum().getTitle().equalsIgnoreCase(title)) albums.add(s.getAlbum());
+        }
+        ArrayList<Album> dereferencedAlbums = new ArrayList<>();
+        for(Album a: new HashSet<>(albums)) {
+            dereferencedAlbums.add(new Album(a));
+        }
+
+        return dereferencedAlbums;
+    }
+
+    public ArrayList<Song> getSongsByArtist(String artist) { 
+        ArrayList<Song> dereferencedSongs = new ArrayList<>();
+        for(Song s: this.songs) {
+            if(s.getArtist().equalsIgnoreCase(artist)) songs.add(new Song(s));
+        }
+        return songs;
+    }
+
+    public ArrayList<Album> getAlbumsByArtist(String artist) {
+        ArrayList<Album> albums = new ArrayList<>();
+        for(Song s: this.songs) {
+            if(s.getArtist().equalsIgnoreCase(artist)) albums.add(s.getAlbum());
+        }
+        ArrayList<Album> dereferencedAlbums = new ArrayList<>();
+        for(Album a: new HashSet<>(albums)) {
+            dereferencedAlbums.add(new Album(a));
+        }
+        return dereferencedAlbums;
     }
 }
