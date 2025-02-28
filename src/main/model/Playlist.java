@@ -39,8 +39,6 @@ public class Playlist {
         return temp ? song : null;
     }
 
-
-    //TODO: need a reference to the origional pList
     public Song removeSong(int index) {
         return plSonglist.remove(index);
     }
