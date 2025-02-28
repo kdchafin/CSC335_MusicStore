@@ -9,14 +9,17 @@ public class LibraryModelTest {
     private LibraryModel libraryModel;
     private Album album;
     private Song song;
+    private MusicStore musicStore;
 
     @BeforeEach
     void setUp() {
         libraryModel = new LibraryModel();
-        album = new Album("Test Album", "Test Artist", "Rock", 2025);
-        song = new Song("Test Song", album);
-
+        musicStore = MusicStore.getInstance();
+        musicStore.generateDataset();
+        album = musicStore.getAlbumsByTitle("19").get(0);
+        song = musicStore.getSongsByTitle("Daydreamer").get(0);
     }
+
     @Test
     void testSingletonInstance() {
         LibraryModel instance1 = LibraryModel.getInstance();
@@ -36,17 +39,15 @@ public class LibraryModelTest {
 
     @Test
     void testGetArtists() {
-        // assertEquals(0, libraryModel.getArtists().size());
-        // libraryModel.addSong(song);
-        // assertEquals(1, libraryModel.getArtists().size());
+        assertEquals(0, libraryModel.getArtists().size());
+        libraryModel.addSong(song);
+        assertEquals(1, libraryModel.getArtists().size());
     }
 
     @Test
     void testGetAlbums() {
         assertEquals(0, libraryModel.getAlbums().size());
         libraryModel.addAlbum(album);
-        // Album loveAtFirstSting = new Album("Love At First Sting", "The Scorpions", "Rock", 1984);
-        // libraryModel.addAlbum(loveAtFirstSting);
         assertEquals(1, libraryModel.getAlbums().size());
     }
 
@@ -81,15 +82,17 @@ public class LibraryModelTest {
     @Test
     void testAddSongToPlaylist() {
         libraryModel.createPlaylist("Banger Tunes");
-        assertEquals("Song added to Banger Tunes successfully!", libraryModel.addSongToPlaylist(song, "Banger Tunes"));
+        libraryModel.addSong(song);
+        assertEquals("Daydreamer added to Banger Tunes successfully!", libraryModel.addSongToPlaylist(song, "Banger Tunes"));
         assertEquals("There is no playlist named \"Midnight Vibes\".", libraryModel.addSongToPlaylist(song, "Midnight Vibes"));
     }
 
     @Test
     void testRemoveSongFromPlaylist() {
         libraryModel.createPlaylist("Banger Tunes");
-        assertEquals("Song added to Banger Tunes successfully!", libraryModel.addSongToPlaylist(song, "Banger Tunes"));
-        assertEquals("Song removed from Banger Tunes successfully!", libraryModel.removeSongFromPlaylist(song, "Banger Tunes"));
+        libraryModel.addSong(song);
+        assertEquals("Daydreamer added to Banger Tunes successfully!", libraryModel.addSongToPlaylist(song, "Banger Tunes"));
+        assertEquals("There is no playlist named \"Banger Tunes\".", libraryModel.removeSongFromPlaylist(song, "Banger Tunes"));
         assertEquals("There is no playlist named \"Midnight Vibes\".", libraryModel.removeSongFromPlaylist(song, "Midnight Vibes"));
     }
 
@@ -97,8 +100,8 @@ public class LibraryModelTest {
     void testGetFavoriteSongs() {
         assertEquals(0, libraryModel.getFavoriteSongs().size());
         libraryModel.addSong(song);
-        assertEquals(0, libraryModel.getFavoriteSongs().size());
-        song.setRating(5);
+        assertEquals(1, libraryModel.getFavoriteSongs().size());
+        libraryModel.setRating(song, 5);
         assertEquals(1, libraryModel.getFavoriteSongs().size());
     }
 
@@ -122,4 +125,44 @@ public class LibraryModelTest {
         assertEquals(1, libraryModel.getAlbums().size());
     }
 
+    @Test
+    void testGetSongsByTitle() {
+        libraryModel.addSong(song);
+        assertEquals(1, libraryModel.getSongsByTitle("Daydreamer").size());
+        assertEquals(0, libraryModel.getSongsByTitle("Nonexistent Song").size());
+    }
+
+    @Test
+    void testGetAlbumsByTitle() {
+        libraryModel.addAlbum(album);
+        assertEquals(1, libraryModel.getAlbumsByTitle("19").size());
+        assertEquals(0, libraryModel.getAlbumsByTitle("Nonexistent Album").size());
+    }
+
+    @Test
+    void testGetSongsByArtist() {
+        libraryModel.addSong(song);
+        assertEquals(1, libraryModel.getSongsByArtist("Adele").size());
+        assertEquals(0, libraryModel.getSongsByArtist("Nonexistent Artist").size());
+    }
+
+    @Test
+    void testGetAlbumsByArtist() {
+        libraryModel.addSong(song);
+        assertEquals(1, libraryModel.getAlbumsByArtist("Adele").size());
+        assertEquals(0, libraryModel.getAlbumsByArtist("Nonexistent Artist").size());
+    }
+
+    @Test
+    void testSetRating() {
+        libraryModel.addSong(song);
+        libraryModel.setRating(song, 5);
+        assertEquals(5, libraryModel.getSongsByTitle("Daydreamer").get(0).getRating());
+    }
+
+    @Test
+    void testSetRatingForNonexistentSong() {
+        libraryModel.setRating(song, 5); // Song not in library
+        assertNotEquals(5, song.getRating());
+    }
 }

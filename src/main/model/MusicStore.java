@@ -82,11 +82,11 @@ public class MusicStore {
 
 // ----------------------  Datagen methods  ----------------------
 
-    public void addAlbumToList(Album album) {
+    private void addAlbumToList(Album album) {
         albumList.add(album);
     }
 
-    public void addSongToList(Song song) {
+    private void addSongToList(Song song) {
         songList.add(song);
     }
 
