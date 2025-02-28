@@ -3,7 +3,7 @@ package main.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class LibraryModel {
+public class LibraryModel extends MusicStore {
 
     private static LibraryModel instance;
     private final MusicStore ms;
@@ -35,7 +35,6 @@ public class LibraryModel {
     // add referenced copies from a dereferenced object
     public void addAlbum(Album album) {
         Album a = ms.getAlbum(album);
-
         if (hasAlbum(a)) return;
         for (Song s : a.getAlbumSongs()) {
             addSong(s);
@@ -63,6 +62,8 @@ public class LibraryModel {
 
         if (songs.contains(s)) {
             s.setRating(rating);
+        } else {
+            throw new IllegalArgumentException("Song not in the library");
         }
     }
 
@@ -143,7 +144,7 @@ public class LibraryModel {
     public String removeSongFromPlaylist(Song song, String name) {
         Song s = ms.getSong(song);
 
-        for (Playlist pl : instance.playlists) {
+        for (Playlist pl : playlists) {
             if (pl.getName().equals(name)) {
                 pl.removeSong(s);
                 return "Song removed from " + pl.getName() + " successfully!";
