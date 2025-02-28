@@ -2,3 +2,5 @@
 .vscode
 /lib/
 .idea
+/test-lib/
+/out/
