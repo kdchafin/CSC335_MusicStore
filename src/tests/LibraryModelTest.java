@@ -9,15 +9,14 @@ public class LibraryModelTest {
     private LibraryModel libraryModel;
     private Album album;
     private Song song;
-    private MusicStore musicStore;
 
     @BeforeEach
     void setUp() {
         libraryModel = new LibraryModel();
-        musicStore = MusicStore.getInstance();
+        MusicStore musicStore = MusicStore.getInstance();
         musicStore.generateDataset();
-        album = musicStore.getAlbumsByTitle("19").get(0);
-        song = musicStore.getSongsByTitle("Daydreamer").get(0);
+        album = musicStore.getAlbumsByTitle("19").getFirst();
+        song = musicStore.getSongsByTitle("Daydreamer").getFirst();
     }
 
     @Test
@@ -157,7 +156,7 @@ public class LibraryModelTest {
     void testSetRating() {
         libraryModel.addSong(song);
         libraryModel.setRating(song, 5);
-        assertEquals(5, libraryModel.getSongsByTitle("Daydreamer").get(0).getRating());
+        assertEquals(5, libraryModel.getSongsByTitle("Daydreamer").getFirst().getRating());
     }
 
     @Test
