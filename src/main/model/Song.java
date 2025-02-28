@@ -3,7 +3,6 @@ package main.model;
 public class Song extends Album {
     private String title;
     private int rating;
-    private boolean isFavorite = false;
     String[] emojiRatings = {"🔥", "🔥🔥", "🔥🔥🔥", "🔥🔥🔥🔥", "🔥🔥🔥🔥🔥"};
     private Album album;
 
@@ -21,7 +20,6 @@ public class Song extends Album {
         this.title = song.getTitle();
         this.album = song.album;
         this.rating = song.getRating();
-        this.isFavorite = song.isFavorite();
     }
 
     //WARNING: all getters in this class return references to the original objects
@@ -38,7 +36,7 @@ public class Song extends Album {
     }
 
     public boolean isFavorite() {
-        return isFavorite;
+        return rating == 5;
     }
     
     @Override
@@ -59,9 +57,6 @@ public class Song extends Album {
     public void setRating(int rating) {
         if(rating < 1 || rating > 5) {
             throw new IllegalArgumentException("Rating must be between 1 and 5");
-        }
-        if(rating == 5) {
-            this.isFavorite = true;
         }
         this.rating = rating;
     }
