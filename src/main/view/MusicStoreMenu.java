@@ -5,8 +5,7 @@ import java.util.Scanner;
 import java.util.ArrayList;
 
 public class MusicStoreMenu extends Menu {
-    public MusicStoreMenu(Menu previousMenu) {
-        //TODO: add a menu option to search for an artist and add them to the library? the spec is confusing on this. 
+    public MusicStoreMenu(Menu previousMenu) { 
         super("""
         [1] Search for Songs By Title
         [2] Search for Albums By Title
@@ -16,11 +15,12 @@ public class MusicStoreMenu extends Menu {
         [6] List All Albums
         [7] List All Artists
         """.trim());
+        colorizeBrackets();
         defaultOption = () -> { previousMenu.executeMenu(); };
         addOption(1, "search for songs by title", () -> { searchForSongsByTitle(); executeMenu();});
         addOption(2, "search for albums by title", () -> { searchForAlbumsByTitle(); executeMenu();});
-        addOption(3, "search for songs by artist", () -> { System.out.println("Search for Songs by Artist"); executeMenu();}); //TODO: search for songs by artist in MusicStoreMenu
-        addOption(4, "search for albums by artist", () -> { System.out.println("Search for Albums by Artist"); executeMenu();}); //TODO: search for albums by artist in MusicStoreMenu
+        addOption(3, "search for songs by artist", () -> { searchForSongsByArtist(); executeMenu();}); 
+        addOption(4, "search for albums by artist", () -> { searchForAlbumsByArtist(); executeMenu();}); 
         addOption(5, "list all songs", () -> { listAllSongs(); executeMenu(); });
         addOption(6, "list all albums", () -> { listAllAlbums(); executeMenu(); });
         addOption(7, "list all artists", () -> { listAllArtists(); executeMenu(); });
@@ -31,7 +31,7 @@ public class MusicStoreMenu extends Menu {
         System.out.println("Enter a song title: ");
         String title = in.nextLine();
         MusicStore musicStore = MusicStore.getInstance();
-        ArrayList<Song> songs = musicStore.getSongByTitle(title);
+        ArrayList<Song> songs = musicStore.getSongsByTitle(title);
 
         if(songs.size() == 0) {
             System.out.println("Song not found");
@@ -53,7 +53,7 @@ public class MusicStoreMenu extends Menu {
         String title = in.nextLine();
         MusicStore musicStore = MusicStore.getInstance();
 
-        ArrayList<Album> albums = musicStore.getAlbumByTitle(title);
+        ArrayList<Album> albums = musicStore.getAlbumsByTitle(title);
     
         if(albums.size() == 0) {
             System.out.println("Album not found");
@@ -69,19 +69,46 @@ public class MusicStoreMenu extends Menu {
         }
     }
 
-    //TODO: NOT FINISHED
     private void searchForSongsByArtist() {
         Scanner in = Menu.getScanner();
         System.out.println("Enter an artist name: ");
         String artist = in.nextLine();
         MusicStore musicStore = MusicStore.getInstance();
-        ArrayList<Song> songs = musicStore.getSongByArtist(artist);
+        ArrayList<Song> songs = musicStore.getSongsByArtist(artist);
 
         if(songs.size() == 0) {
-            System.out.println("No songs found for artist: " + artist);
+            System.out.println("Artist not found");
+        } else if(songs.size() == 1) {
+            System.out.println(songs.get(0));
+            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0));
+            selectedSongMenu.executeMenu();
+        } else {
+            MultiSongMenu multiSongMenu = new MultiSongMenu(this, songs);
+            multiSongMenu.executeMenu();
         }
-        System.out.println(songs.size() + " Songs Found:");
-        printEachElement(songs);
+    }
+
+    private void searchForAlbumsByArtist() {
+        Scanner in = Menu.getScanner();
+        System.out.println("Enter an artist name: ");
+        String artist = in.nextLine();
+        MusicStore musicStore = MusicStore.getInstance();
+
+        ArrayList<Album> albums = musicStore.getAlbumsByArtist(artist);
+    
+        if(albums.size() == 0) {
+            System.out.println("Artist not found");
+        }
+        else if (albums.size() == 1) {
+            System.out.println(albums.get(0));
+            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0));
+            selectedAlbumMenu.executeMenu();
+        }
+
+        else {
+            MultiAlbumsMenu multiAlbumMenu = new MultiAlbumsMenu(this, albums);
+            multiAlbumMenu.executeMenu();
+        }
     }
 
     private void listAllSongs() {
