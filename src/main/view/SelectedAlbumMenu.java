@@ -10,11 +10,11 @@ public class SelectedAlbumMenu extends Menu {
         super("""
         [1] Add Album to Library
         """.trim());
-
+        colorizeBrackets();
         this.album = album;
         this.library = LibraryModel.getInstance();
         defaultOption = () -> { previousMenu.executeMenu(); };
-        addOption(1, "add album to library", () -> { addAlbumToLibrary(); executeMenu(); });
+        addOption(1, "add album to library", () -> { addAlbumToLibrary(); previousMenu.executeMenu(); });
     }
 
     private void addAlbumToLibrary() {

@@ -6,8 +6,9 @@ public class MainMenu extends Menu {
         Hello user. What would you like to do?
         [1] Interact With Music Store
         [2] View Library
-        [3] Exit"""
-        );
+        [3] Exit
+        """.trim());
+        colorizeBrackets();
         defaultOption = () -> { System.exit(0); };
         addOption(1, "music store", () -> { MusicStoreMenu musicStoreMenu = new MusicStoreMenu(this); musicStoreMenu.executeMenu(); });
         addOption(2, "view library", () -> { LibraryMenu libraryMenu = new LibraryMenu(this); libraryMenu.executeMenu(); });

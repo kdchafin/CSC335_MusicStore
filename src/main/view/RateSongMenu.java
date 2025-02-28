@@ -15,6 +15,7 @@ public class RateSongMenu extends Menu {
         [4] Rate Song 4/5
         [5] Rate Song 5/5
         """.trim());
+        colorizeBrackets();
         this.song = song;
         this.previousMenu = previousMenu;
         defaultOption = () -> { previousMenu.executeMenu(); };
@@ -27,7 +28,7 @@ public class RateSongMenu extends Menu {
 
     private void rateSong(int rating) {
         System.out.println("You rated the song " + song.getTitle() + " with " + rating + "/5");
-
+        lm.addSong(song);
         lm.setRating(song, rating);
         previousMenu.executeMenu();
     }

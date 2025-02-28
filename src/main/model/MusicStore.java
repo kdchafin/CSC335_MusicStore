@@ -114,7 +114,7 @@ public class MusicStore {
 
 //----------------------   All Dereferenced getter methods  ----------------------
 
-    public ArrayList<Song> getSongByTitle(String title) {
+    public ArrayList<Song> getSongsByTitle(String title) {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
@@ -123,7 +123,7 @@ public class MusicStore {
         return temp;
     }
 
-    public ArrayList<Song> getSongByArtist(String artist) {
+    public ArrayList<Song> getSongsByArtist(String artist) {
         ArrayList<Song> temp = new ArrayList<>();
 
         for (Song s : songList) {
@@ -132,7 +132,7 @@ public class MusicStore {
         return temp;
     }
 
-    public ArrayList<Album> getAlbumByTitle(String title) {
+    public ArrayList<Album> getAlbumsByTitle(String title) {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {
@@ -141,7 +141,7 @@ public class MusicStore {
         return temp;
     }
 
-    public ArrayList<Album> getAlbumByArtist(String artist) {
+    public ArrayList<Album> getAlbumsByArtist(String artist) {
         ArrayList<Album> temp = new ArrayList<>();
 
         for (Album a : albumList) {

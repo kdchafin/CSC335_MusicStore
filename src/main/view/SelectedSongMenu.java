@@ -15,6 +15,7 @@ public class SelectedSongMenu extends Menu {
         [3] Rate Song
         [4] Mark Song As Favorite
         """.trim());
+        colorizeBrackets();
         this.song = song;
         this.library = LibraryModel.getInstance();
         defaultOption = () -> { previousMenu.executeMenu(); };
@@ -33,11 +34,13 @@ public class SelectedSongMenu extends Menu {
         Scanner in = Menu.getScanner();
         System.out.println("Enter a playlist name: ");
         String name = in.nextLine();
+        library.addSong(this.song);
         library.addSongToPlaylist(this.song, name);
-        System.out.println("Song Added To " + name + " uccessfully");
+        System.out.println("Song Added To " + name + " Successfully!");
     }
 
     private void markSongAsFavorite() {
+        library.addSong(this.song);
         library.setRating(this.song, 5);
         System.out.println(this.song.getTitle() + " Marked As Favorite!");
     }
