@@ -6,14 +6,14 @@ This program uses a simple text based gui and a list of albums to simulate a mus
 Users can Create a music library, add music to their library, configure playlists, and
 rate songs using simple number based commands.
 
-**To compile**
-Navigate to the CSC335_MusicStore directory.
-Run: ```javac -d out/production/MusicStore src/main/model/*.java src/main/view/*.java```
-Generate the .jar: ```jar cfe MusicStore.jar main.view.View -C out/production/MusicStore .```
+**To compile**<br>
+Navigate to the CSC335_MusicStore directory.<br>
+Run: ```javac -d out/production/MusicStore src/main/model/*.java src/main/view/*.java```<br>
+Generate the .jar: ```jar cfe MusicStore.jar main.view.View -C out/production/MusicStore .```<br>
 
-**To run the .jar**
-Navigate to the CSC335_MusicStore directory.
-Run ```java -jar MusicStore.jar```
+**To run the .jar**<br>
+Navigate to the CSC335_MusicStore directory.<br>
+Run ```java -jar MusicStore.jar```<br>
 
 ![Class Diagram](CSC335_MusicStore.svg)
 
