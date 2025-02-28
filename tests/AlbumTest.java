@@ -42,10 +42,10 @@ public class AlbumTest {
     }
 
     @Test
-    void testGetSongsOnAlbum() {
-        assertEquals(2, loveAtFirstSting.getSongsOnAlbum().size());
-        assertEquals("Rock You Like A Hurricane", loveAtFirstSting.getSongsOnAlbum().get(0).getTitle());
-        assertEquals("Big City Nights", loveAtFirstSting.getSongsOnAlbum().get(1).getTitle());
+    void testgetAlbumSongs() {
+        assertEquals(2, loveAtFirstSting.getAlbumSongs().size());
+        assertEquals("Rock You Like A Hurricane", loveAtFirstSting.getAlbumSongs().get(0).getTitle());
+        assertEquals("Big City Nights", loveAtFirstSting.getAlbumSongs().get(1).getTitle());
     }
 
     @Test
@@ -64,7 +64,7 @@ public class AlbumTest {
         assertEquals(loveAtFirstSting.getArtist(), copy.getArtist());
         assertEquals(loveAtFirstSting.getGenre(), copy.getGenre());
         assertEquals(loveAtFirstSting.getYear(), copy.getYear());
-        assertEquals(loveAtFirstSting.getSongsOnAlbum(), copy.getSongsOnAlbum());
+        assertEquals(loveAtFirstSting.getAlbumSongs(), copy.getAlbumSongs());
         assertFalse(loveAtFirstSting == copy);
         assertTrue(loveAtFirstSting.equals(copy));
     }
@@ -73,7 +73,7 @@ public class AlbumTest {
     void testAddSong() {
         Song crossfire = new Song("Crossfire", loveAtFirstSting);
         loveAtFirstSting.addSong(crossfire);
-        assertEquals(3, loveAtFirstSting.getSongsOnAlbum().size());
+        assertEquals(3, loveAtFirstSting.getAlbumSongs().size());
     }
 
     @Test
