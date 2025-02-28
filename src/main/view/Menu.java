@@ -9,6 +9,15 @@ public abstract class Menu {
     protected final HashMap<String, Runnable> options;
     protected final HashMap<Integer, Runnable> numberedOptions;
     protected Runnable defaultOption;
+    private static final String RESET = "\u001B[0m";
+    private static final String BLACK = "\u001B[30m";
+    private static final String RED = "\u001B[31m";
+    private static final String GREEN = "\u001B[32m";
+    private static final String YELLOW = "\u001B[33m";
+    private static final String BLUE = "\u001B[34m";
+    private static final String MAGENTA = "\u001B[35m";
+    private static final String CYAN = "\u001B[36m";
+    private static final String WHITE = "\u001B[37m";
 
     public Menu(String menu) {
         this.menu = menu;
@@ -22,6 +31,9 @@ public abstract class Menu {
         return menu;
     }
 
+    protected void colorizeBrackets() {
+        this.menu = this.menu.replaceAll("\\[(\\d+)\\]", GREEN + "[$1]" + RESET);
+    }
 
     public void addOption(int number, String option, Runnable function) {
         options.put(option, function);
@@ -33,7 +45,7 @@ public abstract class Menu {
         if(function != null) {
             function.run();
         } else {
-            System.out.println("Function not found: " + option);
+            System.out.println(RED + "Function not found: " + option + RESET);
             executeMenu();
         }
     }
@@ -43,14 +55,14 @@ public abstract class Menu {
         if(function != null) {
             function.run();
         } else {
-            System.out.println("Function not found: " + number);
+            System.out.println(RED + "Function not found: " + number + RESET);
             executeMenu();
         }
     }
 
     public void executeMenu() {
         Scanner in = getScanner();
-        System.out.println("----------------------------");
+        System.out.println("----------------------------"); 
         System.out.println("[*] Enter Nothing To Go Back\n");
         System.out.println(menu);
         System.out.println("----------------------------");

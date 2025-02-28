@@ -9,12 +9,13 @@ public class MultiAlbumsMenu extends Menu {
         defaultOption = () -> { previousMenu.executeMenu(); };
         int index = 0;
         StringBuilder sb = new StringBuilder();
-        sb.append(album.size() + " Songs Found:");
+        sb.append(album.size() + " Albums Found:");
         for(Album a : album) {
             index++;
-            addOption(index, a.getTitle(), () -> { System.out.println("You selected " + a.toString()); SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, a); selectedAlbumMenu.executeMenu(); });
-            sb.append("\n[" + index + "] " + a.toString());
+            addOption(index, a.getTitle(), () -> { System.out.println("You selected " + a.getTitle()); SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, a); selectedAlbumMenu.executeMenu(); });
+            sb.append("\n[" + index + "] " + a.getTitle());
         }
         menu += sb.toString();
+        colorizeBrackets();
     }
 }

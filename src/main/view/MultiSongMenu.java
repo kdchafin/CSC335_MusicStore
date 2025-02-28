@@ -16,5 +16,6 @@ public class MultiSongMenu extends Menu {
             sb.append("\n[" + index + "] " + s.toString());
         }
         menu += sb.toString();
+        colorizeBrackets();
     }
 }
