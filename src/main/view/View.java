@@ -15,7 +15,7 @@ public class View {
         MusicStore musicStore = MusicStore.getInstance();
         musicStore.generateDataset();
 
-        MainMenu mainMenu = new MainMenu();
-        mainMenu.executeMenu();
+        AccountMenu accountMenu = new AccountMenu();
+        accountMenu.executeMenu();
     }
 }

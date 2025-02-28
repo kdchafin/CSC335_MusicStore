@@ -9,9 +9,9 @@ public abstract class Menu {
     protected final HashMap<String, Runnable> options;
     protected final HashMap<Integer, Runnable> numberedOptions;
     protected Runnable defaultOption;
-    private static final String RESET = "\u001B[0m";
-    private static final String RED = "\u001B[31m";
-    private static final String GREEN = "\u001B[32m";
+    protected static final String RESET = "\u001B[0m";
+    protected static final String RED = "\u001B[31m";
+    protected static final String GREEN = "\u001B[32m";
 
     public Menu(String menu) {
         this.menu = menu;
@@ -69,7 +69,7 @@ public abstract class Menu {
         try {
             chosenOption = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            System.out.println("Function not found: " + input);
+            System.out.println(RED + "Function not found: " + input + RESET);
             executeMenu();
         }
         executeOption(chosenOption);
