@@ -27,9 +27,7 @@ public class MusicStore {
         return instance;
     }
 
-    /*
-     * Generate both lists of album and song objects for reference in code. 
-     */
+    // generate data for both the albums and songs
     public void generateDataset() {
         Scanner fileScanner = null;
         File albumFile = new File("albums/albums.txt");
@@ -71,7 +69,7 @@ public class MusicStore {
             Album album = new Album(albumName, artistName, genre, year);
             addAlbumToList(album);
 
-            //
+            // add songs to the album and song list
             while (albumScanner.hasNextLine()) {
                 currLine = albumScanner.nextLine();
                 Song song = new Song(currLine, album);
@@ -82,7 +80,19 @@ public class MusicStore {
         }
     }
 
+// ----------------------  Datagen methods  ----------------------
+
+    public void addAlbumToList(Album album) {
+        albumList.add(album);
+    }
+
+    public void addSongToList(Song song) {
+        songList.add(song);
+    }
+
+
 //----------------------   Referenced getter methods  ----------------------
+// these return a reference to theobjects direct data
 
     protected Song getSong(Song song) {
         for (Song s : this.songList) {
@@ -102,17 +112,8 @@ public class MusicStore {
         return null;
     }
 
-// ----------------------  Datagen methods  ----------------------
-
-    public void addAlbumToList(Album album) {
-        albumList.add(album);
-    }
-
-    public void addSongToList(Song song) {
-        songList.add(song);
-    }
-
 //----------------------   All Dereferenced getter methods  ----------------------
+// dereferenced object getters. these are memory safe to use
 
     public ArrayList<Song> getSongsByTitle(String title) {
         ArrayList<Song> temp = new ArrayList<>();

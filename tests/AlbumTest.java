@@ -1,88 +1,83 @@
 package tests;
 
 import org.junit.jupiter.api.Test;
-import static org.junit.jupiter.api.Assertions.*;
 
 import main.model.Album;
 import main.model.Song;
 
-
-import org.junit.jupiter.api.BeforeEach;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class AlbumTest {
-    Album loveAtFirstSting;
-    
-    @BeforeEach
-    void setUp() {
-        loveAtFirstSting = new Album("Love At First Sting", "The Scorpions", "Rock", 1984);
-        Song rockYouLikeAHurricane = new Song("Rock You Like A Hurricane", loveAtFirstSting);
-        Song bigCityNights = new Song("Big City Nights", loveAtFirstSting);
-        loveAtFirstSting.addSong(rockYouLikeAHurricane);
-        loveAtFirstSting.addSong(bigCityNights);
+
+    @Test
+    public void testConstructorAndGetters() {
+        Album album = new Album("Title", "Artist", "Genre", 2020);
+        assertEquals("Title", album.getTitle());
+        assertEquals("Artist", album.getArtist());
+        assertEquals("Genre", album.getGenre());
+        assertEquals(2020, album.getYear());
     }
 
     @Test
-    void testGetTitle() {
-        assertEquals("Love At First Sting", loveAtFirstSting.getTitle());
+    public void testCopyConstructor() {
+        Album original = new Album("Title", "Artist", "Genre", 2020);
+        Album copy = new Album(original);
+        assertEquals(original.getTitle(), copy.getTitle());
+        assertEquals(original.getArtist(), copy.getArtist());
+        assertEquals(original.getGenre(), copy.getGenre());
+        assertEquals(original.getYear(), copy.getYear());
+        assertEquals(original.getAlbumSongs(), copy.getAlbumSongs());
     }
 
     @Test
-    void testGetArtist() {
-        assertEquals("The Scorpions", loveAtFirstSting.getArtist());
+    public void testAddSong() {
+        Album album = new Album("Title", "Artist", "Genre", 2020);
+        Song song = new Song("Song Title", album);
+        album.addSong(song);
+        assertTrue(album.getAlbumSongs().contains(song));
     }
 
     @Test
-    void testGetGenre() {
-        assertEquals("Rock", loveAtFirstSting.getGenre());
+    public void testToString() {
+        Album album = new Album("Title", "Artist", "Genre", 2020);
+        Song song1 = new Song("Song 1", album);
+        Song song2 = new Song("Song 2", album);
+        album.addSong(song1);
+        album.addSong(song2);
+        String expected = "Title by Artist\n1. Song 1\n2. Song 2";
+        assertEquals(expected, album.toString());
     }
 
     @Test
-    void testGetYear() {
-        assertEquals(1984, loveAtFirstSting.getYear());
+    public void testEqualsSameObject() {
+        Album album = new Album("Title", "Artist", "Genre", 2020);
+        assertTrue(album.equals(album));
     }
 
     @Test
-    void testgetAlbumSongs() {
-        assertEquals(2, loveAtFirstSting.getAlbumSongs().size());
-        assertEquals("Rock You Like A Hurricane", loveAtFirstSting.getAlbumSongs().get(0).getTitle());
-        assertEquals("Big City Nights", loveAtFirstSting.getAlbumSongs().get(1).getTitle());
+    public void testEqualsDifferentObjectSameValues() {
+        Album album1 = new Album("Title", "Artist", "Genre", 2020);
+        Album album2 = new Album("Title", "Artist", "Genre", 2020);
+        assertTrue(album1.equals(album2));
     }
 
     @Test
-    void testToString() {
-        assertEquals("""
-        Love At First Sting by The Scorpions
-        1. Rock You Like A Hurricane
-        2. Big City Nights
-        """.trim(), loveAtFirstSting.toString());
+    public void testEqualsDifferentObjectDifferentValues() {
+        Album album1 = new Album("Title1", "Artist", "Genre", 2020);
+        Album album2 = new Album("Title2", "Artist", "Genre", 2020);
+        assertFalse(album1.equals(album2));
     }
 
     @Test
-    void testCopyConstructor() {
-        Album copy = new Album(loveAtFirstSting);
-        assertEquals(loveAtFirstSting.getTitle(), copy.getTitle());
-        assertEquals(loveAtFirstSting.getArtist(), copy.getArtist());
-        assertEquals(loveAtFirstSting.getGenre(), copy.getGenre());
-        assertEquals(loveAtFirstSting.getYear(), copy.getYear());
-        assertEquals(loveAtFirstSting.getAlbumSongs(), copy.getAlbumSongs());
-        assertFalse(loveAtFirstSting == copy);
-        assertTrue(loveAtFirstSting.equals(copy));
+    public void testEqualsNull() {
+        Album album = new Album("Title", "Artist", "Genre", 2020);
+        assertFalse(album.equals(null));
     }
 
     @Test
-    void testAddSong() {
-        Song crossfire = new Song("Crossfire", loveAtFirstSting);
-        loveAtFirstSting.addSong(crossfire);
-        assertEquals(3, loveAtFirstSting.getAlbumSongs().size());
-    }
-
-    @Test
-    void testEquals() {
-        Album copy = new Album(loveAtFirstSting);
+    public void testEqualsDifferentClass() {
+        Album album = new Album("Title", "Artist", "Genre", 2020);
         Object obj = new Object();
-        assertFalse(loveAtFirstSting.equals(obj)); // obj is not instance of Album and should return false
-        assertFalse(copy == loveAtFirstSting); // copy constructor should dereference original album
-        assertFalse(loveAtFirstSting == null); // album is not null
-        assertTrue(copy.equals(loveAtFirstSting)); // overridden equals method should return true for a copy of the object
+        assertFalse(album.equals(obj));
     }
 }

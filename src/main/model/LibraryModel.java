@@ -3,7 +3,7 @@ package main.model;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-public class LibraryModel extends MusicStore {
+public class LibraryModel {
 
     private static LibraryModel instance;
     private final MusicStore ms;
@@ -178,11 +178,11 @@ public class LibraryModel extends MusicStore {
     }
 
     public ArrayList<Song> getSongsByArtist(String artist) { 
-        ArrayList<Song> dereferencedSongs = new ArrayList<>();
+        ArrayList<Song> temp = new ArrayList<>();
         for(Song s: this.songs) {
-            if(s.getArtist().equalsIgnoreCase(artist)) songs.add(new Song(s));
+            if(s.getArtist().equalsIgnoreCase(artist)) temp.add(new Song(s));
         }
-        return songs;
+        return temp;
     }
 
     public ArrayList<Album> getAlbumsByArtist(String artist) {

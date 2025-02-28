@@ -35,8 +35,8 @@ public class LibraryMenu extends Menu {
         addOption(8, "view a playlist", () -> { viewPlaylist(); executeMenu(); });
         addOption(9, "delete a playlist", () -> { deletePlaylist(); executeMenu(); });
         addOption(10, "search for songs by title", () -> { searchForSongsByTitle(); executeMenu();});
-        addOption(11, "search for albums by title", () -> { searchForAlbumsByTitle(); executeMenu();}); //TODO: currently gets all songs on the playlist instead of songs on the playlist in the library
-        addOption(12, "search for songs by artist", () -> { searchForSongsByArtist(); executeMenu();}); //TODO: doesnt work
+        addOption(11, "search for albums by title", () -> { searchForAlbumsByTitle(); executeMenu();});
+        addOption(12, "search for songs by artist", () -> { searchForSongsByArtist(); executeMenu();});
         addOption(13, "search for albums by artist", () -> { searchForAlbumsByArtist(); executeMenu();}); 
     }
 
@@ -65,7 +65,6 @@ public class LibraryMenu extends Menu {
         } else {
             System.out.println("You have " + albums.size() + " album" + plural + ":");
             for (String album : albums) {
-                MusicStore ms = MusicStore.getInstance();
                 System.out.println("- " + album);
             }
         }
