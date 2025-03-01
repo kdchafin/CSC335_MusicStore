@@ -9,15 +9,14 @@ public class LibraryModelTest {
     private LibraryModel libraryModel;
     private Album album;
     private Song song;
-    private MusicStore musicStore;
 
     @BeforeEach
     void setUp() {
         libraryModel = new LibraryModel();
-        musicStore = MusicStore.getInstance();
+        MusicStore musicStore = MusicStore.getInstance();
         musicStore.generateDataset();
-        album = musicStore.getAlbumsByTitle("19").get(0);
-        song = musicStore.getSongsByTitle("Daydreamer").get(0);
+        album = musicStore.getAlbumsByTitle("19").getFirst();
+        song = musicStore.getSongsByTitle("Daydreamer").getFirst();
     }
 
     @Test
@@ -89,10 +88,11 @@ public class LibraryModelTest {
 
     @Test
     void testRemoveSongFromPlaylist() {
-        libraryModel.createPlaylist("Banger Tunes");
+        String name = "Banger Tunes";
+        libraryModel.createPlaylist(name);
         libraryModel.addSong(song);
-        assertEquals("Daydreamer added to Banger Tunes successfully!", libraryModel.addSongToPlaylist(song, "Banger Tunes"));
-        assertEquals("There is no playlist named \"Banger Tunes\".", libraryModel.removeSongFromPlaylist(song, "Banger Tunes"));
+        assertEquals("Daydreamer added to Banger Tunes successfully!", libraryModel.addSongToPlaylist(song, name));
+        assertEquals("Song removed from " + name + " successfully!", libraryModel.removeSongFromPlaylist(song, name));
         assertEquals("There is no playlist named \"Midnight Vibes\".", libraryModel.removeSongFromPlaylist(song, "Midnight Vibes"));
     }
 
@@ -157,7 +157,7 @@ public class LibraryModelTest {
     void testSetRating() {
         libraryModel.addSong(song);
         libraryModel.setRating(song, 5);
-        assertEquals(5, libraryModel.getSongsByTitle("Daydreamer").get(0).getRating());
+        assertEquals(5, libraryModel.getSongsByTitle("Daydreamer").getFirst().getRating());
     }
 
     @Test
