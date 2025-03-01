@@ -88,10 +88,11 @@ public class LibraryModelTest {
 
     @Test
     void testRemoveSongFromPlaylist() {
-        libraryModel.createPlaylist("Banger Tunes");
+        String name = "Banger Tunes";
+        libraryModel.createPlaylist(name);
         libraryModel.addSong(song);
-        assertEquals("Daydreamer added to Banger Tunes successfully!", libraryModel.addSongToPlaylist(song, "Banger Tunes"));
-        assertEquals("There is no playlist named \"Banger Tunes\".", libraryModel.removeSongFromPlaylist(song, "Banger Tunes"));
+        assertEquals("Daydreamer added to Banger Tunes successfully!", libraryModel.addSongToPlaylist(song, name));
+        assertEquals("Song removed from " + name + " successfully!", libraryModel.removeSongFromPlaylist(song, name));
         assertEquals("There is no playlist named \"Midnight Vibes\".", libraryModel.removeSongFromPlaylist(song, "Midnight Vibes"));
     }
 
