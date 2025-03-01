@@ -35,8 +35,8 @@ public class SelectedSongMenu extends Menu {
         System.out.println("Enter a playlist name: ");
         String name = in.nextLine();
         library.addSong(this.song);
-        library.addSongToPlaylist(this.song, name);
-        System.out.println("Song Added To " + name + " Successfully!");
+        String result =library.addSongToPlaylist(this.song, name);
+        System.out.println(result);
     }
 
     private void markSongAsFavorite() {
