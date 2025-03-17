@@ -12,7 +12,8 @@ public class MultiSongMenu extends Menu {
         sb.append(songs.size() + " Songs Found:");
         for(Song s : songs) {
             index++;
-            addOption(index, s.getTitle(), () -> { System.out.println("You selected " + s.toString()); SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, s); selectedSongMenu.executeMenu(); });
+            boolean inLibrary = previousMenu.getClass().getSimpleName().equals("LibraryMenu");
+            addOption(index, s.getTitle(), () -> { System.out.println("You selected " + s.toString()); SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, s, inLibrary); selectedSongMenu.executeMenu(); });
             sb.append("\n[" + index + "] " + s.toString());
         }
         menu += sb.toString();
