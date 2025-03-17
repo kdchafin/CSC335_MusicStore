@@ -2,6 +2,7 @@ package main.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class LibraryModel {
 
@@ -40,6 +41,75 @@ public class LibraryModel {
         for (Song s : a.getAlbumSongs()) {
             addSong(s);
         }
+    }
+
+    // get the top ten most played songs and add them to a playlist
+    public void generateMostPlayed() {
+        // remove the Most played and regenerate it
+        for (Playlist p : playlists) {
+            if (p.getName().equals("Most Played")) {
+                playlists.remove(p);
+            }
+        }
+        
+        Playlist temp = getOrAddInternal("Most Played");
+        ArrayList<Song> sortedSongs = new ArrayList<>(songs);
+
+        // sort songs by plays and get top ten
+        sortedSongs.sort((a, b) -> Integer.compare(b.getPlays(), a.getPlays()));
+        List<Song> topSongs = sortedSongs.subList(0, Math.min(10, sortedSongs.size()));
+
+        // add top ten to playlist
+        for (Song s : topSongs) {
+            temp.addSong(s);
+        }
+
+        return;
+    }
+
+    // get the ten most recently played songs and add them to a playlist
+    public String addToRecentlyPlayed(Song song) {
+        if (!songs.contains(song)) {
+            return "You do not own this song in your library.";
+        }
+
+        Song curSong = null;
+        for (Song s : songs) {
+            if (s.equals(song)) {
+                s.play();
+                curSong = s;
+            }
+        }
+
+        Playlist temp = getOrAddInternal("Recently Played");
+        
+        // remove last song if playlist is full ( > 10 songs)
+        if (temp.getSize() == 10) {
+            temp.removeAtIndex(9);
+        }
+
+        // add song to front of list
+        temp.addAtIndex(curSong, 0);
+
+        return "Playing the song: " + curSong.getTitle();
+    }
+
+    // get or add a playlist of a specific name
+    public Playlist getOrAddInternal(String name) {
+        Playlist temp = null;
+
+        for (Playlist p : playlists) {
+            if (p.getName().equals(name)) {
+                return p;
+            }
+        }
+
+        // make list if it doesnt exist
+        if (temp == null) {
+            temp = new Playlist(name);
+            playlists.add(temp);
+        }
+        return temp;
     }
 
     // add referenced copies from a dereferenced object
@@ -114,6 +184,7 @@ public class LibraryModel {
 
     public ArrayList<Playlist> getPlaylists() {
         ArrayList<Playlist> temp = new ArrayList<>();
+        generateMostPlayed();
         for(Playlist playlist : playlists) {
             temp.add(new Playlist(playlist));
         }

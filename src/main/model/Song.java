@@ -5,6 +5,7 @@ public class Song extends Album {
     private int rating;
     private String[] emojiRatings = {"🔥", "🔥🔥", "🔥🔥🔥", "🔥🔥🔥🔥", "🔥🔥🔥🔥🔥"};
     private Album album;
+    private int plays;
 
     public Song(String title, Album album) {
         super(album.getTitle(),
@@ -13,13 +14,24 @@ public class Song extends Album {
               album.getYear());
         this.title = title;
         this.album = album;
+        this.plays = 0;
     }
 
+    // Copy constructor
     public Song(Song song) {
         super(song);
         this.title = song.getTitle();
         this.album = song.album;
         this.rating = song.getRating();
+        this.plays = song.plays;
+    }
+
+    public void play() {
+        this.plays += 1;
+    }
+
+    public int getPlays() {
+        return this.plays;
     }
 
     //WARNING: all getters in this class return references to the original objects
@@ -46,7 +58,8 @@ public class Song extends Album {
                   this.getArtist() + ", \"" + 
                   album.getTitle() + "\" (" + 
                   album.getYear() + ")" + " [" + 
-                  this.getGenre() + "]");
+                  this.getGenre() + "]" +
+                  " - " + this.plays + " plays");
 
         if(this.rating != 0) {
             sb.append(" [" + emojiRatings[this.rating-1] + "]");
