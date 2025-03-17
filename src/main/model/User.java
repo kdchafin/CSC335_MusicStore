@@ -23,7 +23,6 @@ public class User {
         if (this.salt == "") {
             this.salt = generateSalt();
         }
-        System.out.println(salt);
         String hashedPassword = hashPassword(password, this.salt);
         return hashedPassword;
     }
