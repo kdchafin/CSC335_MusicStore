@@ -38,7 +38,7 @@ public class MusicStoreMenu extends Menu {
 
         } else if (songs.size() == 1) {
             System.out.println(songs.get(0));
-            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0));
+            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0), false);
             selectedSongMenu.executeMenu();
             
         } else if (songs.size() > 1) {
@@ -60,7 +60,7 @@ public class MusicStoreMenu extends Menu {
         }
         else if (albums.size() == 1) {
             System.out.println(albums.get(0));
-            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0));
+            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0), false);
             selectedAlbumMenu.executeMenu();
         }
         else {
@@ -80,7 +80,7 @@ public class MusicStoreMenu extends Menu {
             System.out.println("Artist not found");
         } else if(songs.size() == 1) {
             System.out.println(songs.get(0));
-            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0));
+            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0), false);
             selectedSongMenu.executeMenu();
         } else {
             MultiSongMenu multiSongMenu = new MultiSongMenu(this, songs);
@@ -101,7 +101,7 @@ public class MusicStoreMenu extends Menu {
         }
         else if (albums.size() == 1) {
             System.out.println(albums.get(0));
-            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0));
+            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0), false);
             selectedAlbumMenu.executeMenu();
         }
 
