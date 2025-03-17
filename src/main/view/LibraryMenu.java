@@ -2,6 +2,8 @@ package main.view;
 
 import main.model.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Scanner;
 
 public class LibraryMenu extends Menu {
@@ -21,6 +23,7 @@ public class LibraryMenu extends Menu {
         [11] Search For Albums By Title
         [12] Search For Songs By Artist
         [13] Search For Albums By Artist
+        [14] Search For Songs By Genre
         """.trim());
         library = LibraryModel.getInstance();
         defaultOption = () -> { previousMenu.executeMenu(); };
@@ -38,12 +41,38 @@ public class LibraryMenu extends Menu {
         addOption(11, "search for albums by title", () -> { searchForAlbumsByTitle(); executeMenu();});
         addOption(12, "search for songs by artist", () -> { searchForSongsByArtist(); executeMenu();});
         addOption(13, "search for albums by artist", () -> { searchForAlbumsByArtist(); executeMenu();}); 
+        addOption(14, "search for songs by genre", () -> { searchForSongsByGenre(); executeMenu();});
     }
 
     private void getSongs() {
-        String plural = library.getSongs().size() == 1 ? "" : "s";
-        if(library.getSongs().size() != 0) System.out.println("You have " + library.getSongs().size() + " song" + plural + " in your library:");
-        printEachElement(library.getSongs(), "song");
+        ArrayList<Song> songs = library.getSongs();
+        String plural = songs.size() == 1 ? "" : "s";
+        if(songs.size() != 0) System.out.println("You have " + library.getSongs().size() + " song" + plural + " in your library:");
+        String sortCriteria = "";
+        while(true && songs.size() != 1) {
+            Scanner in = Menu.getScanner();
+            System.out.println("Do you want to sort by artist, rating, or title? (artist/rating/title):\nEnter nothing to shuffle songs");
+            sortCriteria = in.nextLine().toLowerCase();
+            if(sortCriteria.equals("artist") || sortCriteria.equals("rating") || sortCriteria.equals("title") || sortCriteria.equals("")) {
+                break;
+            }
+            System.out.println(RED + "Invalid option." + RESET); 
+        }
+        
+        switch (sortCriteria) {
+            case "title":
+                songs.sort(Comparator.comparing(song -> song.getTitle().toLowerCase()));
+                break;
+            case "artist":
+                songs.sort(Comparator.comparing(Song::getArtist));
+                break;
+            case "rating":
+                songs.sort(Comparator.comparing(Song::getRating));
+                break;
+            default:
+                Collections.shuffle(songs);
+        }
+        printEachElement(songs, "song");
     }
 
     private void getArtists() {
@@ -163,7 +192,7 @@ public class LibraryMenu extends Menu {
             System.out.println("Song not found in library");
         } else if (songs.size() == 1) {
             System.out.println(songs.get(0));
-            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0));
+            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0), true);
             selectedSongMenu.executeMenu();
             
         } else if (songs.size() > 1) {
@@ -183,7 +212,7 @@ public class LibraryMenu extends Menu {
         }
         else if (albums.size() == 1) {
             System.out.println(albums.get(0));
-            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0));
+            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0), true);
             selectedAlbumMenu.executeMenu();
         }
         else {
@@ -202,7 +231,7 @@ public class LibraryMenu extends Menu {
             System.out.println("Artist not found");
         } else if(songs.size() == 1) {
             System.out.println(songs.get(0));
-            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0));
+            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0), true);
             selectedSongMenu.executeMenu();
         } else {
             MultiSongMenu multiSongMenu = new MultiSongMenu(this, songs);
@@ -222,13 +251,33 @@ public class LibraryMenu extends Menu {
         }
         else if (albums.size() == 1) {
             System.out.println(albums.get(0));
-            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0));
+            SelectedAlbumMenu selectedAlbumMenu = new SelectedAlbumMenu(this, albums.get(0), true);
             selectedAlbumMenu.executeMenu();
         }
 
         else {
             MultiAlbumsMenu multiAlbumMenu = new MultiAlbumsMenu(this, albums);
             multiAlbumMenu.executeMenu();
+        }
+    }
+
+    private void searchForSongsByGenre() {
+        Scanner in = Menu.getScanner();
+        System.out.println("Enter a genre: ");
+        String genre = in.nextLine();
+        ArrayList<Song> songs = library.getSongsByGenre(genre);
+
+        if(songs.size() == 0) {
+            System.out.println("Genre not found");
+        }
+        else if (songs.size() == 1) {
+            System.out.println(songs.get(0));
+            SelectedSongMenu selectedSongMenu = new SelectedSongMenu(this, songs.get(0), true);
+            selectedSongMenu.executeMenu();
+        }
+        else {
+            MultiSongMenu multiSongMenu = new MultiSongMenu(this, songs);
+            multiSongMenu.executeMenu();
         }
     }
 }
