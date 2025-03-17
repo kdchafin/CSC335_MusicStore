@@ -34,6 +34,14 @@ public class Playlist {
         plSonglist.add(song);
     }
 
+    public void removeAtIndex(int index) {
+        plSonglist.remove(index);
+    }
+
+    public void addAtIndex(Song song, int index) {
+        plSonglist.add(index, song);
+    }
+
     public Song removeSong(Song song) {
         boolean temp = plSonglist.remove(song);
         return temp ? song : null;
@@ -41,6 +49,10 @@ public class Playlist {
 
     public Song removeSong(int index) {
         return plSonglist.remove(index);
+    }
+
+    public int getSize() {
+        return plSonglist.size();
     }
 
     @Override

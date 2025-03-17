@@ -14,6 +14,7 @@ public class SelectedSongMenu extends Menu {
         [2] Add Song To Playlist
         [3] Rate Song
         [4] Mark Song As Favorite
+        [5] Play Song
         """.trim());
         colorizeBrackets();
         this.song = song;
@@ -23,6 +24,7 @@ public class SelectedSongMenu extends Menu {
         addOption(2, "add song to playlist", () -> { addSongToPlaylist(); executeMenu(); });
         addOption(3, "rate song", () -> { rateSong(); });
         addOption(4, "mark song as favorite", () -> { markSongAsFavorite(); executeMenu(); });
+        addOption(5, "play selected song", () -> { playSong(); executeMenu(); });
     }
 
     private void addSongToLibrary() {
@@ -35,7 +37,7 @@ public class SelectedSongMenu extends Menu {
         System.out.println("Enter a playlist name: ");
         String name = in.nextLine();
         library.addSong(this.song);
-        String result =library.addSongToPlaylist(this.song, name);
+        String result = library.addSongToPlaylist(this.song, name);
         System.out.println(result);
     }
 
@@ -48,5 +50,10 @@ public class SelectedSongMenu extends Menu {
     private void rateSong() {
         RateSongMenu rateSongMenu = new RateSongMenu(this, this.song);
         rateSongMenu.executeMenu();
+    }
+
+    private void playSong() {
+        String msg = library.addToRecentlyPlayed(this.song);
+        System.out.println(msg);
     }
 }

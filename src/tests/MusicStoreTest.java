@@ -1,4 +1,4 @@
-package tests;
+package main.model;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +15,11 @@ class MusicStoreTest {
     void setUp() {
         musicStore = MusicStore.getInstance();
         musicStore.generateDataset();
+    }
+
+    @Test
+    void testConstructor() {
+        assertNotNull(musicStore);
     }
 
     @Test
