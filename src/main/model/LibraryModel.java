@@ -2,6 +2,7 @@ package main.model;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.HashMap;
 import java.util.List;
 
 public class LibraryModel extends MusicStore {
@@ -61,10 +62,50 @@ public class LibraryModel extends MusicStore {
 
         // add top ten to playlist
         for (Song s : topSongs) {
-            temp.addSong(s);
+            temp.addSong(new Song(s));
         }
 
         return;
+    }
+
+    public void generateTopRated() {
+        Playlist pl = getOrAddInternal("Top Rated");    
+        for(Song s: songs) {
+            if(s.getRating() > 3) {
+                pl.addSong(new Song(s));
+            }
+        }
+    }
+
+    public void generateFavoriteSongs() {
+        Playlist pl = getOrAddInternal("Favorite Songs");
+        for(Song s: songs) {
+            if(s.isFavorite()) {
+                pl.addSong(new Song(s));
+            }
+        }
+    }
+
+    public void generateByGenre() {
+        HashMap<String, Integer> genres = new HashMap<>();
+        for(Song s: songs) {
+            String genre = s.getGenre();
+            if(genres.containsKey(genre)) {
+                genres.put(genre, genres.get(genre) + 1);
+            } else {
+                genres.put(genre, 1);
+            }
+        }
+        for(String genre: genres.keySet()) {
+            if(genres.get(genre) >= 10) {
+                Playlist pl = getOrAddInternal(genre);
+                for(Song s: songs) {
+                    if(s.getGenre().equals(genre)) {
+                        pl.addSong(new Song(s));
+                    }
+                }
+            }
+        }
     }
 
     // get the ten most recently played songs and add them to a playlist
@@ -95,7 +136,7 @@ public class LibraryModel extends MusicStore {
     }
 
     // get or add a playlist of a specific name
-    public Playlist getOrAddInternal(String name) {
+    private Playlist getOrAddInternal(String name) {
         Playlist temp = null;
 
         for (Playlist p : playlists) {
@@ -187,6 +228,9 @@ public class LibraryModel extends MusicStore {
     public ArrayList<Playlist> getPlaylists() {
         ArrayList<Playlist> temp = new ArrayList<>();
         generateMostPlayed();
+        generateTopRated();
+        generateFavoriteSongs();
+        generateByGenre();
         for(Playlist playlist : playlists) {
             temp.add(new Playlist(playlist));
         }
@@ -268,5 +312,31 @@ public class LibraryModel extends MusicStore {
             dereferencedAlbums.add(new Album(a));
         }
         return dereferencedAlbums;
+    }
+
+    public ArrayList<Song> getSongsByGenre(String genre) {
+        ArrayList<Song> dereferencedSongs = new ArrayList<>();
+        for(Song s : songs) {
+            if(s.getGenre().equalsIgnoreCase(genre)) {
+                dereferencedSongs.add(new Song(s));
+            }
+        }
+        return dereferencedSongs;
+    }
+
+    // ----------------------  Remove methods  ----------------------
+    public void removeSong(Song song) {
+        for(Song s: songs) {
+            if(s.equals(song)) {
+                songs.remove(s);
+                return;
+            }
+        }
+    }
+
+    public void removeAlbum(Album album) {
+        for(Song s: album.getAlbumSongs()) {
+            removeSong(s);
+        }
     }
 }
