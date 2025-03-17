@@ -48,6 +48,7 @@ public class LibraryModel extends MusicStore {
         for (Playlist p : playlists) {
             if (p.getName().equals("Most Played")) {
                 playlists.remove(p);
+                break;
             }
         }
         
