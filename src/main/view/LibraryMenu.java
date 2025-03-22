@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 public class LibraryMenu extends Menu {
     private LibraryModel library;
@@ -31,7 +32,7 @@ public class LibraryMenu extends Menu {
         addOption(1, "get songs", () -> { getSongs(); executeMenu(); });
         addOption(2, "get albums", () -> { getAlbums(); executeMenu(); });
         addOption(3, "get artists", () -> { getArtists(); executeMenu(); });
-        addOption(4, "get playlists", () -> { printEachElement(library.getPlaylists(), "playlist"); executeMenu(); });
+        addOption(4, "get playlists", () -> { getPlaylists(); executeMenu(); });
         addOption(5, "get favorite songs", () -> { getFavoriteSongs(); executeMenu(); });
         addOption(6, "create a playlist", () -> { createPlaylist(); executeMenu(); });
         addOption(7, "remove a song from a playlist", () -> { editPlaylist(); executeMenu(); });
@@ -44,34 +45,39 @@ public class LibraryMenu extends Menu {
         addOption(14, "search for songs by genre", () -> { searchForSongsByGenre(); executeMenu();});
     }
 
-    private void getSongs() {
-        ArrayList<Song> songs = library.getSongs();
-        String plural = songs.size() == 1 ? "" : "s";
-        if(songs.size() != 0) System.out.println("You have " + library.getSongs().size() + " song" + plural + " in your library:");
+    private ArrayList<Song> sortOrShuffleSongs(ArrayList<Song> theSongs) {
         String sortCriteria = "";
-        while(true && songs.size() != 1) {
+        while(true && theSongs.size() > 1) {
             Scanner in = Menu.getScanner();
-            System.out.println("Do you want to sort by artist, rating, or title? (artist/rating/title):\nEnter nothing to shuffle songs");
+            System.out.println("Do you want to sort by title, artist, or rating? (artist/rating/title):\nEnter nothing to shuffle songs");
             sortCriteria = in.nextLine().toLowerCase();
             if(sortCriteria.equals("artist") || sortCriteria.equals("rating") || sortCriteria.equals("title") || sortCriteria.equals("")) {
                 break;
             }
-            System.out.println(RED + "Invalid option." + RESET); 
+            printErrorMessage("Invalid option.");
         }
         
         switch (sortCriteria) {
             case "title":
-                songs.sort(Comparator.comparing(song -> song.getTitle().toLowerCase()));
+                theSongs.sort(Comparator.comparing(song -> song.getTitle().toLowerCase()));
                 break;
             case "artist":
-                songs.sort(Comparator.comparing(Song::getArtist));
+                theSongs.sort(Comparator.comparing(Song::getArtist));
                 break;
             case "rating":
-                songs.sort(Comparator.comparing(Song::getRating));
+                theSongs.sort(Comparator.comparing(Song::getRating));
                 break;
             default:
-                Collections.shuffle(songs);
+                Collections.shuffle(theSongs);
         }
+        return theSongs;
+    }
+
+    private void getSongs() {
+        ArrayList<Song> songs = library.getSongs();
+        String plural = songs.size() == 1 ? "" : "s";
+        if(songs.size() != 0) System.out.println("You have " + library.getSongs().size() + " song" + plural + " in your library:");
+        sortOrShuffleSongs(songs);
         printEachElement(songs, "song");
     }
 
@@ -99,6 +105,15 @@ public class LibraryMenu extends Menu {
         }
     }
 
+    private void getPlaylists() {
+        ArrayList<Playlist> playlists = library.getPlaylists();
+        ArrayList<Playlist> nonEmptyPlaylists = new ArrayList<>(playlists.stream()
+            .filter(playlist -> playlist.getSize() > 0)
+            .collect(Collectors.toList()));
+        printEachElement(nonEmptyPlaylists, "playlist");
+    }
+
+
     private void getFavoriteSongs() {
         ArrayList<Song> favoriteSongs = library.getFavoriteSongs();
         String plural = favoriteSongs.size() == 1 ? "" : "s";
@@ -106,7 +121,8 @@ public class LibraryMenu extends Menu {
             System.out.println("You have no favorite songs");
         } else {
             System.out.println("You have " + favoriteSongs.size() + " favorite song" + plural + ":");
-            printEachElement(library.getFavoriteSongs(), "favorite song"); 
+            sortOrShuffleSongs(favoriteSongs);
+            printEachElement(favoriteSongs, "song");
         } 
     }
 
@@ -156,13 +172,31 @@ public class LibraryMenu extends Menu {
         System.out.println("Enter a playlist name: ");
         String name = in.nextLine();
         ArrayList<Playlist> playlists = library.getPlaylists();
+        Playlist selectedPlaylist = null;
+        boolean foundPlaylist = false;
         for(Playlist pl : playlists) {
             if(pl.getName().equalsIgnoreCase(name)) {
-                System.out.println(pl);
-                return;
+                selectedPlaylist = pl;
+                foundPlaylist = true;
             }
         }
-        System.out.println("There is no playlist named \"" + name + "\".");
+        if(!foundPlaylist) {
+            System.out.println("There is no playlist named \"" + name + "\".");
+            return;
+        }
+        if(name.equalsIgnoreCase("Recently Played") || name.equalsIgnoreCase("Most Played")) {
+            System.out.println(ORANGE + "This playlist cannot be shuffled or sorted." + RESET);
+            System.out.println(selectedPlaylist);
+            return;
+        }
+        ArrayList<Song> rearrangedSongs = sortOrShuffleSongs(selectedPlaylist.getSongs());
+        Playlist temp = new Playlist(name);
+        for (Song s : rearrangedSongs) {
+            temp.addSong(s);
+        }
+        System.out.println(temp);
+        // System.out.println(selectedPlaylist);
+
     }
 
     private void deletePlaylist() {
