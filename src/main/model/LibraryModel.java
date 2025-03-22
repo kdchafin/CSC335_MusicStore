@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.HashMap;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class LibraryModel extends MusicStore {
 
@@ -54,7 +55,9 @@ public class LibraryModel extends MusicStore {
         }
         
         Playlist temp = getOrAddInternal("Most Played");
-        ArrayList<Song> sortedSongs = new ArrayList<>(songs);
+        ArrayList<Song> sortedSongs = new ArrayList<>(songs.stream()
+            .filter(song -> song.getPlays() > 0)
+            .collect(Collectors.toList()));
 
         // sort songs by plays and get top ten
         sortedSongs.sort((a, b) -> Integer.compare(b.getPlays(), a.getPlays()));
@@ -128,6 +131,7 @@ public class LibraryModel extends MusicStore {
         if (temp.getSize() == 10) {
             temp.removeAtIndex(9);
         }
+        temp.removeSong(curSong);
 
         // add song to front of list
         temp.addAtIndex(curSong, 0);
@@ -154,18 +158,18 @@ public class LibraryModel extends MusicStore {
     }
 
     // add referenced copies from a dereferenced object
-    public String addSongToPlaylist(Song song, String name) {
+    public String addSongToPlaylist(Song song, String playlistName) {
         Song s = ms.getSong(song);
 
         if (!songs.contains(s)) return s.getTitle() + " not found in the library";
 
         for (Playlist pl : playlists) {
-            if (pl.getName().equals(name)) {
+            if (pl.getName().equals(playlistName)) {
                 pl.addSong(s);
                 return s.getTitle() + " added to " + pl.getName() + " successfully!";
             }
         }
-        return "There is no playlist named \"" + name + "\".";
+        return "There is no playlist named \"" + playlistName + "\".";
     }
 
     // rate referenced copies from a dereferenced object (if it exists in the library)
