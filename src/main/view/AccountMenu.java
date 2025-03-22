@@ -39,7 +39,7 @@ public class AccountMenu extends Menu {
         String username = in.nextLine();
         System.out.println("Please enter a password: ");
         String password = in.nextLine();
-        User user = new User(username, password, ""); // pass an empty string for the salt
+        User user = new User(username, password);
         userDatabase.addUser(user);
         System.out.println(GREEN + "Account created successfully." + RESET);
         MainMenu mainMenu = new MainMenu(this, user);
