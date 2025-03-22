@@ -24,8 +24,6 @@ class UserTest {
         assertNotNull(user);
         assertEquals(username, user.getUsername());
         assertNotNull(user.getHashedPassword());
-        assertNotNull(user.getSalt());
-        assertEquals(16, user.getSalt().length); // Check salt length
     }
 
     @Test
@@ -37,9 +35,8 @@ class UserTest {
 
     @Test
     void testHashingConsistency() {
-        byte[] salt = user.getSalt();
-        String hashedPassword1 = User.hashPassword(password, salt);
-        String hashedPassword2 = User.hashPassword(password, salt);
+        String hashedPassword1 = User.hashPassword(password);
+        String hashedPassword2 = User.hashPassword(password);
         assertEquals(hashedPassword1, hashedPassword2); // Same input should yield the same hash
     }
 
@@ -47,11 +44,5 @@ class UserTest {
     void testDifferentPasswordsYieldDifferentHashes() {
         User anotherUser = new User("anotherUser", "anotherPassword456");
         assertNotEquals(user.getHashedPassword(), anotherUser.getHashedPassword());
-    }
-
-    @Test
-    void testSaltUniqueness() {
-        User anotherUser = new User("uniqueUser", "uniquePassword789");
-        assertNotEquals(user.getSalt(), anotherUser.getSalt());
     }
 }
