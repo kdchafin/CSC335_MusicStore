@@ -59,7 +59,10 @@ public class Song extends Album {
                   album.getTitle() + "\" (" + 
                   album.getYear() + ")" + " [" + 
                   this.getGenre() + "]" +
-                  " - " + this.plays + " plays");
+                  " - " + this.plays + " play");
+        if(this.plays != 1) {
+            sb.append("s");
+        }
 
         if(this.rating != 0) {
             sb.append(" [" + emojiRatings[this.rating-1] + "]");
