@@ -13,11 +13,13 @@ public class SelectedSongMenu extends Menu {
         [2] Add Song To Playlist
         [3] Rate Song
         [4] Mark Song As Favorite
-        [5] Play Song
+        [5] View Album Information
         """.trim());
         if(inLibrary) {
             addOption(1, "remove song from library", () -> { removeSongFromLibrary(); executeMenu(); });
             menu = "[1] Remove Song From Library\n" + menu;
+            menu += "\n[6] Play Song";
+            addOption(6, "play song", () -> { playSong(); executeMenu(); });
         } else {
             addOption(1, "add song to library", () -> { addSongToLibrary(); executeMenu(); });
             menu = "[1] Add Song To Library\n" + menu;
@@ -30,7 +32,7 @@ public class SelectedSongMenu extends Menu {
         addOption(2, "add song to playlist", () -> { addSongToPlaylist(); executeMenu(); });
         addOption(3, "rate song", () -> { rateSong(); });
         addOption(4, "mark song as favorite", () -> { markSongAsFavorite(); executeMenu(); });
-        addOption(5, "play selected song", () -> { playSong(); executeMenu(); });
+        addOption(5, "view album information", () -> { viewAlbumInformation(); executeMenu(); });
     }
 
     private void addSongToLibrary() {
@@ -39,6 +41,7 @@ public class SelectedSongMenu extends Menu {
     }
 
     private void removeSongFromLibrary() {
+        System.out.println("Song Removed From Library!");
         library.removeSong(this.song);
     }
 
@@ -60,6 +63,10 @@ public class SelectedSongMenu extends Menu {
     private void rateSong() {
         RateSongMenu rateSongMenu = new RateSongMenu(this, this.song);
         rateSongMenu.executeMenu();
+    }
+
+    private void viewAlbumInformation() {
+        System.out.println(this.song.getAlbum().toString());
     }
 
     private void playSong() {
