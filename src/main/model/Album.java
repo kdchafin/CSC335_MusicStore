@@ -52,7 +52,7 @@ public class Album {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         int index = 0;
-        sb.append(this.getTitle() + " by " + this.getArtist());
+        sb.append(this.getTitle() + " by " + this.getArtist() + " [" + this.getGenre() + "] (" + this.getYear() + ")");
         for(Song song : this.getAlbumSongs()) {
             index++;
             sb.append("\n" + index + ". " + song.getTitle());
