@@ -21,12 +21,6 @@ public class Playlist {
         return this.plName;
     }
 
-    public void addAlbum(Album album) {
-        for(Song s : album.getAlbumSongs()) {
-            addSong(s);
-        }
-    }
-
     public void addSong(Song song) {
         for(Song s : plSonglist) {
             if(s.equals(song)) return;
@@ -53,6 +47,10 @@ public class Playlist {
 
     public int getSize() {
         return plSonglist.size();
+    }
+
+    public ArrayList<Song> getSongs() {
+        return new ArrayList<Song>(plSonglist);
     }
 
     @Override
