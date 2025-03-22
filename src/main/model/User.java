@@ -2,50 +2,46 @@ package main.model;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.security.SecureRandom;
 import java.util.Base64;
 
 public class User {
     private String username;
     private String password;
-    private String salt;
+    public static final byte[] salt = new byte[] { 
+        (byte)0x1A, (byte)0x2B, (byte)0x3C, (byte)0x4D, 
+        (byte)0x5E, (byte)0x6F, (byte)0x7A, (byte)0x8B, 
+        (byte)0x9C, (byte)0xAD, (byte)0xBE, (byte)0xCF, 
+        (byte)0xD0, (byte)0xE1, (byte)0xF2, (byte)0xFF 
+    };
+    
     private LibraryModel libraryModel;
 
-    public User(String username, String password, String salt) {
+    public User(String username, String password) {
         this.username = username;
-        this.salt = salt;
-        this.password = encryptPassword(password);
+        this.password = hashPassword(password);
         this.libraryModel = new LibraryModel();
     }
 
-    private String encryptPassword(String password) {
-        // Generate salt and cryptographically hash the password
-        if (this.salt == "") {
-            this.salt = generateSalt();
+    public User(String username, String password, boolean isHashed) {
+        this.username = username;
+        if(isHashed) {
+            this.password = password;
+        } else {
+            this.password = hashPassword(password);
         }
-        String hashedPassword = hashPassword(password, this.salt);
-        return hashedPassword;
+        this.libraryModel = new LibraryModel();
     }
-    
-    private static String generateSalt() {
-        SecureRandom sr = new SecureRandom();
-        byte[] salt = new byte[16]; // 16 bytes salt
-        sr.nextBytes(salt);
-        // Convert byte array to a Base64 encoded string
-        return Base64.getEncoder().encodeToString(salt);
-    }
-    
+
     // Public static method in order to use in other classes to validate log in.
-    public static String hashPassword(String password, String salt) {
+    public static String hashPassword(String password) {
         MessageDigest md = null;
         try {
             md = MessageDigest.getInstance("SHA-256");
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-        // Convert the Base64 encoded salt back to bytes
-        byte[] saltBytes = Base64.getDecoder().decode(salt);
-        md.update(saltBytes);
+
+        md.update(salt);
         byte[] hashedPassword = md.digest(password.getBytes());
         return Base64.getEncoder().encodeToString(hashedPassword);
     }
@@ -56,10 +52,6 @@ public class User {
 
     public String getHashedPassword() {
         return password;
-    }
-
-    public String getSalt() {
-        return salt;
     }
 
     public LibraryModel getLibraryModel() {

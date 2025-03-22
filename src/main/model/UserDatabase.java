@@ -46,9 +46,7 @@ public class UserDatabase {
             while ((line = reader.readLine()) != null) {
                 String[] userInfo = line.split(","); // username,password,salt format.
 
-                //TODO: i cant get this salt to work and parse in from csv so idfk what to do, 
-                // it should just read in and then the user instance variable has it but it wont WORK 
-                User user = new User(userInfo[0], userInfo[1], userInfo[2]);
+                User user = new User(userInfo[0], userInfo[1], true);
                 users.put(user.getUsername(), user);
             }
         } catch (IOException e) {
@@ -59,7 +57,7 @@ public class UserDatabase {
 
     public void addUser(User user) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath, true))) {
-            writer.write(user.getUsername() + "," + user.getHashedPassword() + "," + user.getSalt() + "\n");
+            writer.write(user.getUsername() + "," + user.getHashedPassword() + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -77,9 +75,8 @@ public class UserDatabase {
         if(user == null) {
             return null; // cannot just return user because we need to do password validation
         }
-        String salt = user.getSalt();
         String hashedPassword = user.getHashedPassword();
-        String hashPassword = User.hashPassword(password, salt);
+        String hashPassword = User.hashPassword(password);
         if(hashPassword.equals(hashedPassword)) {
             return user; // return the user if the password is correct, then we can get the user's library.
         } else {
