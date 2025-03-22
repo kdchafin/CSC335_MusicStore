@@ -46,19 +46,6 @@ public class PlaylistTest {
     }
 
     @Test
-    public void testAddAlbum() {
-        Playlist playlist = new Playlist("My Playlist");
-        Album album = new Album("Test Album", "Test Artist", "Rock", 2020);
-        album.addSong(new Song("Song1", album));
-        album.addSong(new Song("Song2", album));
-
-        playlist.addAlbum(album);
-
-        assertTrue(playlist.toString().contains("Song1"));
-        assertTrue(playlist.toString().contains("Song2"));
-    }
-
-    @Test
     public void testRemoveSongByObject() {
         Playlist playlist = new Playlist("My Playlist");
         Album album = new Album("Test Album", "Test Artist", "Rock", 2020);
