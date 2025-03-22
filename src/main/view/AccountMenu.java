@@ -28,7 +28,7 @@ public class AccountMenu extends Menu {
            MainMenu mainMenu = new MainMenu(this, user);
            mainMenu.executeMenu();
         } else {
-            System.out.println("Invalid username or password.");
+            printErrorMessage("Invalid username or password.");
             executeMenu();
         }
     }
@@ -41,7 +41,7 @@ public class AccountMenu extends Menu {
         String password = in.nextLine();
         User user = new User(username, password);
         userDatabase.addUser(user);
-        System.out.println(GREEN + "Account created successfully." + RESET);
+        printSuccessMessage("Account created successfully.");
         MainMenu mainMenu = new MainMenu(this, user);
         mainMenu.executeMenu();
     }

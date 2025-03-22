@@ -11,6 +11,7 @@ public abstract class Menu {
     protected Runnable defaultOption;
     protected static final String RESET = "\u001B[0m";
     protected static final String RED = "\u001B[31m";
+    protected static final String ORANGE = "\u001B[33m";
     protected static final String GREEN = "\u001B[32m";
 
     public Menu(String menu) {
@@ -29,6 +30,14 @@ public abstract class Menu {
         this.menu = this.menu.replaceAll("\\[(\\d+)\\]", GREEN + "[$1]" + RESET);
     }
 
+    protected void printErrorMessage(String message) {
+        System.out.println(RED + message + RESET);
+    }
+
+    protected void printSuccessMessage(String message) {
+        System.out.println(GREEN + message + RESET);
+    }
+
     public void addOption(int number, String option, Runnable function) {
         options.put(option, function);
         numberedOptions.put(number, function);
@@ -39,7 +48,7 @@ public abstract class Menu {
         if(function != null) {
             function.run();
         } else {
-            System.out.println(RED + "Function not found: " + option + RESET);
+            printErrorMessage("Function not found: " + option);
             executeMenu();
         }
     }
@@ -49,7 +58,7 @@ public abstract class Menu {
         if(function != null) {
             function.run();
         } else {
-            System.out.println(RED + "Function not found: " + number + RESET);
+            printErrorMessage("Function not found: " + number);
             executeMenu();
         }
     }
@@ -69,7 +78,7 @@ public abstract class Menu {
         try {
             chosenOption = Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            System.out.println(RED + "Function not found: " + input + RESET);
+            printErrorMessage("Function not found: " + input);
             executeMenu();
         }
         executeOption(chosenOption);
