@@ -1,7 +1,8 @@
 package main.view;
 
-import main.model.UserDatabase;
-import main.model.User;
+import main.controller.User;
+import main.controller.UserDatabase;
+
 import java.util.Scanner;
 
 public class AccountMenu extends Menu {

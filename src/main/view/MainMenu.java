@@ -1,6 +1,6 @@
 package main.view;
 
-import main.model.User;
+import main.controller.User;
 
 public class MainMenu extends Menu {
     public MainMenu(Menu previousMenu, User loggedInUser) {
