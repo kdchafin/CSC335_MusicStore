@@ -8,8 +8,9 @@ import java.io.IOException;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import main.model.User;
-import main.model.UserDatabase;
+
+import main.controller.User;
+import main.controller.UserDatabase;
 
 public class UserDatabaseTest {
     User user = new User("testUser", "testPassword123");

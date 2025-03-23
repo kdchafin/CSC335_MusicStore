@@ -1,4 +1,4 @@
-package main.model;
+package main.controller;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,7 +17,7 @@ public class UserDatabase {
     
     // provide a constructor with no parameters that uses default file path
     public UserDatabase() {
-        this("users.csv");
+        this("src/main/controller/users.csv");
     }
 
     // provide a second  constructor that takes a file path as a parameter for testing
