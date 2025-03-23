@@ -90,7 +90,6 @@ public class MusicStore {
         songList.add(song);
     }
 
-
 //----------------------   Referenced getter methods  ----------------------
 // these return a reference to theobjects direct data
 
@@ -113,7 +112,7 @@ public class MusicStore {
     }
 
 //----------------------   All Dereferenced getter methods  ----------------------
-// dereferenced object getters. these are memory safe to use
+// dereferenced object getters. these are memory safe to use and called by the view
 
     public ArrayList<Song> getSongsByTitle(String title) {
         ArrayList<Song> temp = new ArrayList<>();
