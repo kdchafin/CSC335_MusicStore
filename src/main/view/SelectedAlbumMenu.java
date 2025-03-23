@@ -1,12 +1,10 @@
 package main.view;
 
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import main.model.Album;
 import main.model.Song;
 import main.model.LibraryModel;
-import main.model.Playlist;
 
 public class SelectedAlbumMenu extends Menu {
     private LibraryModel library;
