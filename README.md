@@ -15,6 +15,7 @@ Generate the .jar: ```jar cfe MusicStore.jar main.view.View -C out/production/Mu
 Navigate to the CSC335_MusicStore directory.<br>
 Run ```java -jar MusicStore.jar```<br>
 
-![Class Diagram](CSC335_MusicStore.svg)
+![Class Diagram](CSC335_MusicStore_UML.svg)
+![Class Diagram](CSC335_MusicStore_Composition.svg)
 
 Link To Video: [View On YouTube](https://youtu.be/xeVPu-S0YpM)
