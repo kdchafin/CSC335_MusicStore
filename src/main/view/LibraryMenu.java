@@ -46,27 +46,36 @@ public class LibraryMenu extends Menu {
     }
 
     private ArrayList<Song> sortOrShuffleSongs(ArrayList<Song> theSongs) {
-        String sortCriteria = "";
+        int sortCriteria = 4;
         while(true && theSongs.size() > 1) {
             Scanner in = Menu.getScanner();
-            System.out.println("Do you want to sort by title, artist, or rating? (artist/rating/title):\nEnter nothing to shuffle songs");
-            sortCriteria = in.nextLine().toLowerCase();
-            if(sortCriteria.equals("artist") || sortCriteria.equals("rating") || sortCriteria.equals("title") || sortCriteria.equals("")) {
+            String tempMenu = """
+                
+                [1] Sort by Artist
+                [2] Sort by Rating
+                [3] Sort by Title
+                [4] Shuffle Songs
+                ----------------------------""";
+            tempMenu= tempMenu.replaceAll("\\[(\\d+)\\]", GREEN + "[$1]" + RESET);
+            System.out.println(tempMenu);
+            sortCriteria = Integer.parseInt(in.nextLine().toLowerCase());
+            if(sortCriteria >= 1 && sortCriteria <= 4) {
                 break;
             }
             printErrorMessage("Invalid option.");
         }
         
         switch (sortCriteria) {
-            case "title":
+            case 1:
                 theSongs.sort(Comparator.comparing(song -> song.getTitle().toLowerCase()));
                 break;
-            case "artist":
+            case 2:
                 theSongs.sort(Comparator.comparing(Song::getArtist));
                 break;
-            case "rating":
+            case 3:
                 theSongs.sort(Comparator.comparing(Song::getRating));
                 break;
+            case 4:
             default:
                 Collections.shuffle(theSongs);
         }
