@@ -11,6 +11,7 @@ public class MainMenu extends Menu {
         [3] Switch Account
         """.trim());
         menu = menu.replace("user", loggedInUser.getUsername());
+        Menu.setUser(loggedInUser);
         colorizeBrackets();
         defaultOption = () -> { previousMenu.executeMenu(); };
         addOption(1, "music store", () -> { MusicStoreMenu musicStoreMenu = new MusicStoreMenu(this); musicStoreMenu.executeMenu(); });

@@ -1,4 +1,4 @@
-# Music Store and Library Management System For CSC 335 - Large Assignment 1
+# Music Store and Library Management System For CSC 335 - Large Assignment 1 & 2
 
 ### Made By Andy Siegel and Kieran Chafin 
 
@@ -18,4 +18,5 @@ Run ```java -jar MusicStore.jar```<br>
 ![Class Diagram](CSC335_MusicStore_UML.svg)
 ![Class Diagram](CSC335_MusicStore_Composition.svg)
 
-Link To Video: [View On YouTube](https://youtu.be/xeVPu-S0YpM)
+Large Assignment 1 Video: [View On YouTube](https://youtu.be/xeVPu-S0YpM)
+Large Assignment 2 Video: [View On YouTube](https://youtu.be/cPtcx5DgyXA)

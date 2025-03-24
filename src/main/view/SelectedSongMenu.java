@@ -26,7 +26,7 @@ public class SelectedSongMenu extends Menu {
         }
         colorizeBrackets();
         this.song = song;
-        this.library = LibraryModel.getInstance();
+        this.library = Menu.getUser().getLibraryModel();
         defaultOption = () -> { previousMenu.executeMenu(); };
         
         addOption(2, "add song to playlist", () -> { addSongToPlaylist(); executeMenu(); });

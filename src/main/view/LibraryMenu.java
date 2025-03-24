@@ -26,7 +26,8 @@ public class LibraryMenu extends Menu {
         [13] Search For Albums By Artist
         [14] Search For Songs By Genre
         """.trim());
-        library = LibraryModel.getInstance();
+        
+        this.library = Menu.getUser().getLibraryModel();
         defaultOption = () -> { previousMenu.executeMenu(); };
         colorizeBrackets();
         addOption(1, "get songs", () -> { getSongs(); executeMenu(); });
@@ -58,7 +59,12 @@ public class LibraryMenu extends Menu {
                 ----------------------------""";
             tempMenu= tempMenu.replaceAll("\\[(\\d+)\\]", GREEN + "[$1]" + RESET);
             System.out.println(tempMenu);
-            sortCriteria = Integer.parseInt(in.nextLine().toLowerCase());
+            try {
+                sortCriteria = Integer.parseInt(in.nextLine().toLowerCase());
+            } catch (NumberFormatException e) {
+                printErrorMessage("Invalid option.");
+                return theSongs;
+            }
             if(sortCriteria >= 1 && sortCriteria <= 4) {
                 break;
             }
@@ -67,13 +73,13 @@ public class LibraryMenu extends Menu {
         
         switch (sortCriteria) {
             case 1:
-                theSongs.sort(Comparator.comparing(song -> song.getTitle().toLowerCase()));
-                break;
-            case 2:
                 theSongs.sort(Comparator.comparing(Song::getArtist));
                 break;
-            case 3:
+            case 2:
                 theSongs.sort(Comparator.comparing(Song::getRating));
+                break;
+            case 3:
+                theSongs.sort(Comparator.comparing(Song::getTitle));
                 break;
             case 4:
             default:

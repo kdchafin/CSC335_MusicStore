@@ -22,7 +22,7 @@ public class SelectedAlbumMenu extends Menu {
         }
         colorizeBrackets();
         this.album = album;
-        this.library = LibraryModel.getInstance();
+        this.library = Menu.getUser().getLibraryModel();
         defaultOption = () -> { previousMenu.executeMenu(); };
     }
 

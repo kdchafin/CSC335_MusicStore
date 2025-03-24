@@ -3,6 +3,8 @@ package main.view;
 import java.util.HashMap;
 import java.util.Scanner;
 
+import main.controller.User;
+
 public abstract class Menu { 
     private static Scanner in;
     protected String menu;
@@ -13,6 +15,7 @@ public abstract class Menu {
     protected static final String RED = "\u001B[31m";
     protected static final String ORANGE = "\u001B[33m";
     protected static final String GREEN = "\u001B[32m";
+    protected static User user;
 
     public Menu(String menu) {
         this.menu = menu;
@@ -89,5 +92,13 @@ public abstract class Menu {
             in = new Scanner(System.in);
         }
         return in;
+    }
+
+    public static void setUser(User user) {
+        Menu.user = user;
+    }
+
+    public static User getUser() {
+        return user;
     }
 }
